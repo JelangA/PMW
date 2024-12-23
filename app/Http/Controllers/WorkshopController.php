@@ -1,28 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
 use App\Http\Resources\WorkshopResource;
 use App\Models\Workshop;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class WorkshopController extends Controller
 {
-	public function index()
+	public function index(): AnonymousResourceCollection
 	{
 		$workshops = Workshop::all();
 		return WorkshopResource::collection($workshops);
 	}
 	
 	// Menampilkan detail workshop berdasarkan ID
-	public function show($id)
+	public function show($id): WorkshopResource
 	{
 		$workshop = Workshop::findOrFail($id);
 		return new WorkshopResource($workshop);
 	}
 	
 	// Menambah workshop baru
-	public function store(Request $request)
+	public function store(Request $request): WorkshopResource
 	{
 		$validated = $request->validate([
 			'title' => 'required|max:150',
@@ -37,7 +39,7 @@ class WorkshopController extends Controller
 	}
 	
 	// Mengupdate data workshop berdasarkan ID
-	public function update(Request $request, $id)
+	public function update(Request $request, $id): WorkshopResource
 	{
 		$validated = $request->validate([
 			'title' => 'required|max:150',
@@ -54,7 +56,7 @@ class WorkshopController extends Controller
 	}
 	
 	// Menghapus workshop berdasarkan ID
-	public function destroy($id)
+	public function destroy($id): JsonResponse
 	{
 		$workshop = Workshop::findOrFail($id);
 		$workshop->delete();

@@ -4,8 +4,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Laravel\Sanctum\Http\Middleware\CheckAbilities;
-
-return Application::configure(basePath: dirname(__DIR__))
+	use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
+	
+	return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
         api: __DIR__.'/../routes/api.php',
@@ -16,7 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
 		$middleware->alias([
 			'abilities' => CheckAbilities::class,
 			'ability' => CheckAbilities::class,
+			'auth:sanctum' => EnsureFrontendRequestsAreStateful::class,
 		]);
+		
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

@@ -14,7 +14,7 @@ class Attendance extends Model
 	
 	// Tentukan kolom yang dapat diisi
 	protected $fillable = [
-		'student', 'workshop_id', 'check_in_time', 'check_out_time', 'status'
+		'student', 'workshop_id', 'check_in_time', 'check_out_time'
 	];
 	
 	// Relasi: Attendance terkait dengan satu mahasiswa (student)

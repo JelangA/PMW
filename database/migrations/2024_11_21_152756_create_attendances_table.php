@@ -17,7 +17,6 @@ return new class extends Migration
 		    $table->unsignedBigInteger('workshop_id'); // Foreign Key ke workshops
 		    $table->dateTime('check_in_time')->nullable(); // Waktu Check-In
 		    $table->dateTime('check_out_time')->nullable(); // Waktu Check-Out
-		    $table->enum('status', ['present', 'absent'])->nullable(); // Status Kehadiran
 		    $table->timestamps();
 		    
 		    // Foreign Key Constraints

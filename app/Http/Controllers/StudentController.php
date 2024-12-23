@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
 use App\Http\Resources\StudentResource;
 use App\Models\Student;
@@ -34,7 +34,6 @@ class StudentController extends Controller
 			'year' => 'required|max:4',
 			'email' => 'required|email|unique:students,email',
 			'status' => 'required|in:active,inactive',
-			'password' => 'required|min:6',
 		]);
 		
 		$student = Student::create($validated);
@@ -52,7 +51,6 @@ class StudentController extends Controller
 			'year' => 'required|max:4',
 			'email' => 'required|email',
 			'status' => 'required|in:active,inactive',
-			'password' => 'nullable|min:6',
 		]);
 		
 		$student = Student::findOrFail($nim);

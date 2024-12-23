@@ -16,7 +16,7 @@ class Student extends Model
 	
 	// Tentukan kolom yang dapat diisi
 	protected $fillable = [
-		'nim', 'name', 'major', 'study_program', 'year', 'email', 'status', 'password'
+		'nim', 'name', 'major', 'study_program', 'year', 'email', 'status'
 	];
 	
 	// Tentukan kolom yang tidak boleh diubah

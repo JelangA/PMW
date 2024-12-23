@@ -52,26 +52,12 @@ class authController
 	{
 		try{
 			$request->validate([
-				'nim' => 'required|numeric|unique:students,nim',
-				'name' => 'required|string',
-				'major' => 'required|string',
-				'study_program' => 'required|string',
-				'year' => 'required|numeric',
+				'nim' => 'required|numeric|unique:users,nim',
 				'email' => 'required|email',
 				'password' => 'required',
 			]);
 			
 			DB::beginTransaction();
-			
-			$student = Student::create([
-				'nim' => $request->nim,
-				'name' => $request->name,
-				'major' => $request->major,
-				'study_program' => $request->study_program,
-				'year' => $request->year,
-				'email' => $request->email,
-				'status' => 'active'
-			]);
 			
 			
 			$user = User::create([
@@ -81,9 +67,7 @@ class authController
 				'nim' => $request->nim,
 			]);
 			
-			
-			
-			if ($user && $student){
+			if ($user){
 				DB::commit();
 				return ResponseFormatter::createAPI(200, 'success', 'Register success');
 			}else{

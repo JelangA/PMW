@@ -19,7 +19,6 @@ return new class extends Migration
 		    $table->string('year', 4);
 		    $table->string('email', 255)->unique();
 		    $table->enum('status', ['active', 'inactive']);
-		    $table->string('password');
 		    $table->timestamps(); // created_at dan updated_at
 	    });
     }
