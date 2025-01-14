@@ -12,6 +12,8 @@ class Attendance extends Model
 	// Tentukan nama tabel
 	protected $table = 'attendance';
 	
+	protected $primaryKey = 'attendance_id';
+	
 	// Tentukan kolom yang dapat diisi
 	protected $fillable = [
 		'student', 'workshop_id', 'check_in_time', 'check_out_time'
