@@ -8,6 +8,7 @@
 4. [Mencari Mahasiswa](#mencari-mahasiswa)
 5. [Check-in Kehadiran](#check-in)
 6. [Check-out Kehadiran](#check-out)
+7. [Makfile doploy command](#run-app-with-gnu-make-unix-based-os-macos-linux)
 
 ---
 
