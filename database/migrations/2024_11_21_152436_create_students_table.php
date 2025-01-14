@@ -17,9 +17,8 @@ return new class extends Migration
 		    $table->string('major', 100);
 		    $table->string('study_program', 150);
 		    $table->string('year', 4);
-		    $table->string('email', 255)->unique();
-		    $table->enum('status', ['active', 'inactive']);
-		    $table->timestamps(); // created_at dan updated_at
+		    $table->string('email', 255);
+		    $table->string('status', 20);
 	    });
     }
 

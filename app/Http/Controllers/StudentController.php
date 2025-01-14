@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class StudentController extends Controller
 {
@@ -22,6 +23,29 @@ class StudentController extends Controller
 		$student = Student::findOrFail($nim);
 		return new StudentResource($student);
 	}
+	
+	public function search(Request $request)
+	{
+		$validated = $request->validate([
+			'nim' => 'required|string|max:9',
+		]);
+		
+		$query = $validated['nim'];
+		
+		$students = Student::where('nim', 'like', '%' . $query . '%')->take(10)->get();
+		
+		Log::alert('Query Results: ' . $students->toJson());
+		
+		if ($students->isEmpty()) {
+			return response()->json([
+				'message' => 'No students found for the provided query.'
+			], 404);
+		}
+		
+		return StudentResource::collection($students);
+	}
+	
+	
 	
 	// Menambah data mahasiswa baru
 	public function store(Request $request)

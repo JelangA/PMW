@@ -30,7 +30,7 @@ class authController
 			
 			// Verifikasi password
 			if (!Hash::check($request->password, $user->password)) {
-				return ResponseFormatter::createAPI(401, 'failed', 'Invalid credentials');
+				return ResponseFormatter::createAPI(401, 'failed', 'Invalid password');
 			}
 			
 			// Membuat token setelah berhasil login
@@ -46,6 +46,7 @@ class authController
 			return ResponseFormatter::createAPI(400, 'failed', $th->getMessage());
 		}
 	}
+	
 	
 	
 	public function register(Request $request)
@@ -78,5 +79,19 @@ class authController
 			DB::rollBack();
 			return ResponseFormatter::createAPI(400, 'failed', $th->getMessage());
 		}
+	}
+	
+	public function profile(Request $request)
+	{
+		$user = $request->user();
+		return ResponseFormatter::createAPI(200, 'success', $user);
+	}
+	
+	public function logout(Request $request)
+	{
+		$user = $request->user();
+		$user->currentAccessToken()->delete();
+		
+		return ResponseFormatter::createAPI(200, 'success', 'Token revoked');
 	}
 }
