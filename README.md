@@ -325,7 +325,7 @@ curl -X POST http://localhost:8000/api/attendance/check-out \
   "created_at": "2025-01-14T02:54:39.000000Z",
   "updated_at": "2025-01-14T03:17:17.000000Z"
 }
-
+```
 
 
 
