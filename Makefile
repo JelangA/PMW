@@ -14,7 +14,7 @@ run-app:
 	docker compose up -d
 
 kill-app:
-	docker compose down
+	docker compose down -v
 
 enter-nginx-container:
 	docker exec -it nginx /bin/sh
