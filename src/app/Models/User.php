@@ -50,4 +50,9 @@ class User extends Authenticatable
         ];
     }
 	
+    // Relasi: Mahasiswa mendaftar sebagai user
+	public function student() : HasOne
+	{
+		return $this->hasOne(Student::class, 'nim', 'nim');
+	}
 }
