@@ -7,9 +7,11 @@ RUN apk update && apk add \
     libpng-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip \
+    icu-dev \
+    libzip-dev
 
-RUN docker-php-ext-install pdo pdo_mysql \
+RUN docker-php-ext-install pdo pdo_mysql intl zip \
     && apk --no-cache add nodejs npm
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
