@@ -11,6 +11,8 @@ class Workshop extends Model
 	
 	// Tentukan nama tabel (jika tidak sesuai dengan konvensi)
 	protected $table = 'workshops';
+
+	protected $primaryKey = 'workshop_id';
 	
 	// Tentukan kolom yang dapat diisi
 	protected $fillable = [

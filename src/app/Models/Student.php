@@ -14,31 +14,23 @@ class Student extends Model
 	// Tentukan nama tabel (jika tidak sesuai dengan konvensi)
 	protected $table = 'students';
 	
-	// Tentukan kolom yang dapat diisi
-	protected $fillable = [
-		'nim', 'name', 'major', 'study_program', 'year', 'email', 'status'
-	];
-	
-	// Tentukan kolom yang tidak boleh diubah
-	protected $guarded = [];
+	// primary key = nim
+	protected $primaryKey = 'nim';
 	
 	// Menggunakan UUID sebagai primary key
 	protected $keyType = 'string';
 	
 	public $incrementing = false;
 	
-	// Menambahkan mutator untuk enkripsi password
-	protected $hidden = [
-		'password',
+	// Tentukan kolom yang dapat diisi
+	protected $fillable = [
+		'nim', 'name', 'major', 'study_program', 'year', 'email', 'status'
 	];
-	
-	// primery key = nim
-	protected $primaryKey = 'nim';
 	
 	// Relasi: Mahasiswa dapat hadir pada banyak workshop
 	public function attendances() : HasMany
 	{
-		return $this->hasMany(Attendance::class, 'student', 'nim');
+		return $this->hasMany(Attendance::class, 'nim', 'student');
 	}
 	
 	// Relasi: Mahasiswa mendaftar sebagai user
