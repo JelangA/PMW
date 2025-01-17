@@ -1,335 +1,51 @@
-# Dokumentasi API PMW
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <img src="https://github.com/ishaqadhel/docker-laravel-mysql-nginx-starter/assets/49280352/cb88bac9-2517-41fe-805e-b81423e64eca" alt="cover" align="center">
+  <h3 align="center">Docker Laravel MySQL Nginx Starter</h3>
+  <p align="center">
+    Project Starter For Web Application Development with Laravel, MySQL, Nginx, and Docker.
+    <br />
+  </p>
+</div>
 
-## Daftar Route
+<div align="center">
 
-1. [Register](#register)
-2. [Login](#login)
-3. [Get Data Mahasiswa](#mendapatkan-data-mahasiswa)
-4. [Mencari Mahasiswa](#mencari-mahasiswa)
-5. [Check-in Kehadiran](#check-in)
-6. [Check-out Kehadiran](#check-out)
-7. [Makfile doploy command](#run-app-with-gnu-make-unix-based-os-macos-linux)
+  <a href="">[![Contributors][contributors-shield]][contributors-url]</a>
+  <a href="">[![Stargazers][stars-shield]][stars-url]</a>
+  <a href="">[![Issues][issues-shield]][issues-url]</a>
 
----
+</div>
 
-## Informasi Umum
+<!-- ABOUT THE PROJECT -->
+## Features
 
-- **Base URL:** `http://localhost:8000`
-- **Autentikasi:** Menggunakan API Key dengan header `X-API-Key`.
-- **Format Data:** Semua request dan response menggunakan format JSON.
+* [Docker](https://www.docker.com/)
+* [Dockerfile with Alpine](https://hub.docker.com/_/alpine)
+* [Nginx](https://www.nginx.com)
+* [Laravel 11](https://laravel.com/)
+* [MySQL](https://www.mysql.com/)
+* [PHP 8.2](https://nodejs.org)
+* [Node](https://nodejs.org)
+* [NPM](https://www.npmjs.com)
+* [PHP Prettier](https://github.com/prettier/plugin-php)
+* [Github Action To Run Prettier Check](https://github.com/ishaqadhel/docker-laravel-mysql-nginx-starter/actions)
+* [Github Action To Run PHP Unit Test](https://github.com/ishaqadhel/docker-laravel-mysql-nginx-starter/actions)
 
----
+<!-- GETTING STARTED -->
+## Getting Started
 
-## Autentikasi
+Follow the instructions below to set up your project.
 
-### Register
+### Prerequisites
 
-- **Endpoint:** `POST /api/auth/register`
-- **Deskripsi:** Mendaftarkan pengguna baru.
+- Download and Install [Docker](https://docs.docker.com/engine/install/)
 
-**Headers:**
-```json
-{
-  "Accept": "application/json"
-}
-```
+### Clone This Template For Your Project
 
-**Body:**
-```json
-{
-  "nim": "231524044",
-  "name": "jelang",
-  "major": "Computer Science",
-  "study_program": "D4",
-  "year": "2023",
-  "email": "jelang@gmail.com",
-  "status": "active",
-  "password": "jelang123"
-}
-```
+- By Clicking Use This Template Button or You can Click [Here](https://github.com/ishaqadhel/docker-laravel-mysql-nginx-starter/generate)
 
-**Contoh cURL:**
-```bash
-curl -X POST http://localhost:8000/api/auth/register \
--H "Accept: application/json" \
--d '{
-  "nim": "231524044",
-  "name": "jelang",
-  "major": "Computer Science",
-  "study_program": "D4",
-  "year": "2023",
-  "email": "jelang@gmail.com",
-  "status": "active",
-  "password": "jelang123"
-}'
-```
-
-**Respon Sukses:**
-```json
-{
-  "metadata": {
-    "code": 200,
-    "status": "success",
-    "message": "Register success"
-  },
-  "data": null
-}
-```
-
-**Respon Gagal:**
-
-**Email Duplikat:**
-```json
-{
-  "metadata": {
-    "code": 400,
-    "status": "failed",
-    "message": "SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'jelang@gmail.com' for key 'users.users_email_unique'"
-  },
-  "data": null
-}
-```
-
-### Login
-
-- **Endpoint:** `POST /api/auth/login`
-- **Deskripsi:** Login pengguna.
-
-**Headers:**
-```json
-{
-  "Accept": "application/json"
-}
-```
-
-**Body:**
-```json
-{
-  "email": "jelang@gmail.com",
-  "password": "jelang123"
-}
-```
-
-**Contoh cURL:**
-```bash
-curl -X POST http://localhost:8000/api/auth/login \
--H "Accept: application/json" \
--d '{
-  "email": "jelang@gmail.com",
-  "password": "jelang123"
-}'
-```
-
-**Respon Sukses:**
-```json
-{
-  "metadata": {
-    "code": 200,
-    "status": "success",
-    "message": "1|x4ITYDodVq2mPPvOOA38ZBuhKL0kTCDKKaU2f9Fl1ac7e8fd"
-  },
-  "data": null
-}
-```
-
-**Respon Gagal:**
-
-**Email Tidak Ditemukan:**
-```json
-{
-  "metadata": {
-    "code": 401,
-    "status": "failed",
-    "message": "Email not found"
-  },
-  "data": null
-}
-```
-
----
-
-## Mahasiswa
-
-### Mendapatkan Data Mahasiswa
-
-- **Endpoint:** `GET /api/students`
-
-**Headers:**
-```json
-{
-  "Accept": "application/json",
-  "Authorization": "Bearer {token}"
-}
-```
-
-**Contoh cURL:**
-```bash
-curl -X GET http://localhost:8000/api/students \
--H "Accept: application/json" \
--H "Authorization: Bearer {token}"
-```
-
-**Respon Sukses:**
-```json
-{
-  "data": [
-    {
-      "nim": "231524045",
-      "name": "bangkong",
-      "major": "Computer Science",
-      "study_program": "D4",
-      "year": "2023",
-      "email": "kong@gmail.com",
-      "status": "active",
-      "created_at": "2024-12-23T07:05:24.000000Z",
-      "updated_at": "2024-12-23T07:05:24.000000Z"
-    }
-  ]
-}
-```
-
-### Mencari Mahasiswa
-
-- **Endpoint:** `GET /api/students/search`
-- **Query Parameter:**
-  - `nim`: NIM mahasiswa
-
-**Contoh cURL:**
-```bash
-curl -X GET "http://localhost:8000/api/students/search?nim=23152" \
--H "Accept: application/json"
-```
-
-**Respon Sukses:**
-```json
-{
-  "data": [
-    {
-      "nim": "231524001",
-      "name": "ALNEZ RAINANSANTANA",
-      "major": "Teknik Komputer dan Informatika",
-      "study_program": "D4-Teknik Informatika",
-      "year": "2023",
-      "email": "alnez.rainansantana.tif423@polban.ac.id",
-      "status": "Mahasiswa Aktif"
-    }
-  ]
-}
-```
-
-**Respon Gagal:**
-
-**Tidak Ditemukan:**
-```json
-{
-  "message": "No students found for the provided query."
-}
-```
-
----
-
-## Kehadiran
-
-### Check-in
-
-- **Endpoint:** `POST /api/attendance/check-in`
-
-**Headers:**
-```json
-{
-  "Accept": "application/json",
-  "Authorization": "Bearer {token}"
-}
-```
-
-**Body:**
-```json
-{
-  "student": "231524046",
-  "workshop_id": "2"
-}
-```
-
-**Contoh cURL:**
-```bash
-curl -X POST http://localhost:8000/api/attendance/check-in \
--H "Accept: application/json" \
--H "Authorization: Bearer {token}" \
--d '{
-  "student": "231524046",
-  "workshop_id": "2"
-}'
-```
-
-**Respon Sukses:**
-```json
-{
-  "data": {
-    "attendance_id": null,
-    "student": "231524046",
-    "workshop_id": "2",
-    "check_in_time": "2025-01-14T02:54:39.921304Z",
-    "check_out_time": null,
-    "status": null
-  }
-}
-```
-
-**Respon Gagal:**
-
-**Di Luar Jadwal:**
-```json
-{
-  "message": "Check-in is not allowed outside workshop schedule"
-}
-```
-
-### Check-out
-
-- **Endpoint:** `POST /api/attendance/check-out`
-
-**Headers:**
-```json
-{
-  "Accept": "application/json",
-  "Authorization": "Bearer {token}"
-}
-```
-
-**Body:**
-```json
-{
-  "student": "231524046",
-  "workshop_id": "2"
-}
-```
-
-**Contoh cURL:**
-```bash
-curl -X POST http://localhost:8000/api/attendance/check-out \
--H "Accept: application/json" \
--H "Authorization: Bearer {token}" \
--d '{
-  "student": "231524046",
-  "workshop_id": "2"
-}'
-```
-
-**Respon Sukses:**
-```json
-{
-  "attendance_id": 1,
-  "student": "231524046",
-  "workshop_id": 2,
-  "check_in_time": "2025-01-14 02:54:39",
-  "check_out_time": "2025-01-14T03:17:17.907938Z",
-  "created_at": "2025-01-14T02:54:39.000000Z",
-  "updated_at": "2025-01-14T03:17:17.000000Z"
-}
-```
-
-
-
+![image](https://user-images.githubusercontent.com/49280352/156305925-c7e3f2f2-c458-4b0b-ad1c-32fcaec50e1d.png)
 
 <!-- USAGE EXAMPLES -->
 ## Run App With GNU Make (UNIX Based OS: MacOS, Linux)
@@ -370,5 +86,18 @@ curl -X POST http://localhost:8000/api/attendance/check-out \
 - Don't forget to run ```npm run format``` inside your php container or run ```make code-format``` before you push your code.
 - Don't forget to run ```php artisan test``` inside your php container or run ```make code-test``` before you push your code.
 
-<!-- USAGE EXAMPLES -->
-## Template Docker by ishaqadhel [Source](https://github.com/ishaqadhel/docker-laravel-mysql-nginx-starter)
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/ishaqadhel/docker-laravel-mysql-nginx-starter.svg?style=for-the-badge
+[contributors-url]: https://github.com/ishaqadhel/docker-laravel-mysql-nginx-starter/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/ishaqadhel/docker-laravel-mysql-nginx-starter.svg?style=for-the-badge
+[forks-url]: https://github.com/ishaqadhel/docker-laravel-mysql-nginx-starter/network/members
+[stars-shield]: https://img.shields.io/github/stars/ishaqadhel/docker-laravel-mysql-nginx-starter.svg?style=for-the-badge
+[stars-url]: https://github.com/ishaqadhel/docker-laravel-mysql-nginx-starter/stargazers
+[issues-shield]: https://img.shields.io/github/issues/ishaqadhel/docker-laravel-mysql-nginx-starter.svg?style=for-the-badge
+[issues-url]: https://github.com/ishaqadhel/docker-laravel-mysql-nginx-starter/issues
+[license-shield]: https://img.shields.io/github/license/ishaqadhel/docker-laravel-mysql-nginx-starter.svg?style=for-the-badge
+[license-url]: https://github.com/ishaqadhel/docker-laravel-mysql-nginx-starter/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/linkedin_username
+[product-screenshot]: images/screenshot.png
