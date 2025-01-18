@@ -1,0 +1,148 @@
+import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:frontend/common/constant.dart';
+import 'package:frontend/pages/attend_page.dart';
+import 'package:frontend/pages/sign_up_page.dart';
+import 'package:frontend/providers/auth_provider.dart';
+import 'package:frontend/widgets/alert_dialog_widget.dart';
+import 'package:frontend/widgets/auth_button_widget.dart';
+import 'package:frontend/widgets/custom_text_form_field_widget.dart';
+import 'package:frontend/widgets/remember_me_check_box_widget.dart';
+import 'package:provider/provider.dart';
+
+class SignInDesktopPage extends StatefulWidget {
+  const SignInDesktopPage({super.key});
+
+  @override
+  State<SignInDesktopPage> createState() => _SignInDesktopPageState();
+}
+
+class _SignInDesktopPageState extends State<SignInDesktopPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: white,
+      body: Row(
+        children: [
+          Expanded(
+            flex: 5,
+            child: Image.asset(
+              "assets/png/pmw-poster.png",
+              fit: BoxFit.cover,
+            ),
+          ),
+          Expanded(
+            flex: 5,
+            child: Container(
+              padding: const EdgeInsets.all(100),
+              decoration: BoxDecoration(
+                color: white,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: height(context) * 0.1,
+                  ),
+                  Text(
+                    "Masuk di sini",
+                    style: primaryTextStyle.copyWith(
+                      fontWeight: bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  SizedBox(
+                    height: defaultPadding,
+                  ),
+                  CustomTextFormFieldWidget(
+                    label: "Alamat email",
+                    hintText: "user@example.com",
+                    controller: emailController,
+                  ),
+                  SizedBox(
+                    height: defaultPadding,
+                  ),
+                  Consumer<AuthProvider>(
+                    builder: (context, authProvider, child) {
+                      return CustomTextFormFieldWidget(
+                        label: "Kata sandi",
+                        hintText: "********",
+                        isPasswordField: true,
+                        isObscureText: authProvider.isObscureText,
+                        controller: passwordController,
+                        setObscureText: () {
+                          authProvider
+                              .setIsObscureText(!authProvider.isObscureText);
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: defaultPadding,
+                  ),
+                  const RememberMeCheckBoxWidget(),
+                  SizedBox(
+                    height: height(context) * 0.1,
+                  ),
+                  AuthButtonWidget(
+                    text: "Masuk sekarang!",
+                    onPressed: () {
+                      showDialogWidget(
+                        context,
+                        true,
+                        onPressed: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: const AttendPage(),
+                            ),
+                            (Route<dynamic> route) => false,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: defaultPadding,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Lupa kata sandi?",
+                        style: primaryTextStyle.copyWith(
+                          fontWeight: bold,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: const SignUpPage(),
+                            ),
+                            (Route<dynamic> route) => false,
+                          );
+                        },
+                        child: Text(
+                          "Belum punya akun?",
+                          style: primaryTextStyle.copyWith(
+                            fontWeight: bold,
+                            color: primaryColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
