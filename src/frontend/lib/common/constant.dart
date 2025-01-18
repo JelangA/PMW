@@ -1,13 +1,22 @@
 //Dibuat oleh Krisna Purnama
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 double defaultPadding = 20;
 double defaultBorderRadius = 15;
 
+String baseURL() {
+  return "http://127.0.0.1:8000";
+}
+
 String baseAPIURL() {
-  return "wss://52.231.109.150:3000";
+  return "${baseURL()}/api";
+}
+
+WebOptions getWebOptions() {
+  return const WebOptions( );
 }
 
 Map<String, String> header(

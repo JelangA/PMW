@@ -4,6 +4,7 @@ import 'package:frontend/widgets/custom_button_widget.dart';
 
 showDialogWidget(
   BuildContext context,
+  String message,
   bool isSuccess, {
   Function()? onPressed,
 }) {
@@ -24,9 +25,7 @@ showDialogWidget(
           ),
         ),
         content: Text(
-          isSuccess
-              ? "Kamu berhasil presensi."
-              : "Periksa koneksi internet kamu ya.",
+          message,
           style: primaryTextStyle.copyWith(
             fontWeight: bold,
             fontSize: 16,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseFormatter;
 use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -13,15 +14,14 @@ class StudentController extends Controller
 	public function index()
 	{
 		$students = Student::all();
-		return StudentResource::collection($students);
-		
+		return ResponseFormatter::createAPI(200, 'success', 'List of students retrieved successfully', StudentResource::collection($students));
 	}
 	
 	// Menampilkan detail mahasiswa berdasarkan ID
 	public function show($nim)
 	{
 		$student = Student::findOrFail($nim);
-		return new StudentResource($student);
+		return ResponseFormatter::createAPI(200, 'success', 'Student details retrieved successfully', new StudentResource($student));
 	}
 	
 	public function search(Request $request)
@@ -37,15 +37,11 @@ class StudentController extends Controller
 		Log::alert('Query Results: ' . $students->toJson());
 		
 		if ($students->isEmpty()) {
-			return response()->json([
-				'message' => 'No students found for the provided query.'
-			], 404);
+			return ResponseFormatter::createAPI(404, 'failed', 'No students found for the provided query.');
 		}
 		
-		return StudentResource::collection($students);
+		return ResponseFormatter::createAPI(200, 'success', 'Search results retrieved successfully', StudentResource::collection($students));
 	}
-	
-	
 	
 	// Menambah data mahasiswa baru
 	public function store(Request $request)
@@ -61,7 +57,7 @@ class StudentController extends Controller
 		]);
 		
 		$student = Student::create($validated);
-		return new StudentResource($student);
+		return ResponseFormatter::createAPI(201, 'success', 'Student created successfully', new StudentResource($student));
 	}
 	
 	// Mengupdate data mahasiswa berdasarkan ID
@@ -80,7 +76,7 @@ class StudentController extends Controller
 		$student = Student::findOrFail($nim);
 		$student->update($validated);
 		
-		return new StudentResource($student);
+		return ResponseFormatter::createAPI(200, 'success', 'Student updated successfully', new StudentResource($student));
 	}
 	
 	// Menghapus data mahasiswa berdasarkan ID
@@ -89,6 +85,6 @@ class StudentController extends Controller
 		$student = Student::findOrFail($nim);
 		$student->delete();
 		
-		return response()->json(['message' => 'Student deleted successfully']);
+		return ResponseFormatter::createAPI(200, 'success', 'Student deleted successfully');
 	}
 }

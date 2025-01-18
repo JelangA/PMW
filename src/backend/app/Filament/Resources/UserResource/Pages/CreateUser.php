@@ -10,7 +10,7 @@ class CreateUser extends CreateRecord
 {
     protected static string $resource = UserResource::class;
 
-    protected static ?string $title = 'Tambah Pendaftar Workshop';
+    protected static ?string $title = 'Tambah Pengguna';
 
-    protected ?string $heading = 'Tambah Pendaftar Workshop';
+    protected ?string $heading = 'Tambah Pengguna';
 }

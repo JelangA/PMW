@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class authController
+class AuthController
 {
 	public function login(Request $request)
 	{
@@ -37,7 +37,7 @@ class authController
 			$token = $user->createToken($request->email, ['student'])->plainTextToken;
 			
 			if ($token) {
-				return ResponseFormatter::createAPI(200, 'success', $token);
+				return ResponseFormatter::createAPI(200, 'success', 'Successfully login', $token);
 			} else {
 				return ResponseFormatter::createAPI(401, 'failed', 'Login failed');
 			}
@@ -84,7 +84,7 @@ class authController
 	public function profile(Request $request)
 	{
 		$user = $request->user();
-		return ResponseFormatter::createAPI(200, 'success', $user);
+		return ResponseFormatter::createAPI(200, 'success', 'get user profile succes ', $user);
 	}
 	
 	public function logout(Request $request)

@@ -6,10 +6,12 @@ class AuthButtonWidget extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
+    this.isLoading = false,
   });
 
   final String text;
   final Function() onPressed;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +27,17 @@ class AuthButtonWidget extends StatelessWidget {
         ),
       ),
       onPressed: onPressed,
-      child: Text(
-        text, 
-        style: secondaryTextStyle,
-      ),
+      child: isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+                color: white,
+                strokeWidth: 2,
+              ),
+            )
+          : Text(
+              text,
+              style: secondaryTextStyle,
+            ),
     );
   }
 }

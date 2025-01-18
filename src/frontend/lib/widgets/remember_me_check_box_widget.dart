@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/common/constant.dart';
-import 'package:frontend/providers/auth_provider.dart';
+import 'package:frontend/providers/authentication_provider.dart';
 import 'package:provider/provider.dart';
 
 class RememberMeCheckBoxWidget extends StatelessWidget {
@@ -10,7 +10,7 @@ class RememberMeCheckBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Consumer<AuthProvider>(
+        Consumer<AuthenticationProvider>(
           builder: (context, authProvider, child) {
             return Checkbox(
               semanticLabel: "Ingat saya",
