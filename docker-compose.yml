@@ -11,7 +11,8 @@ services:
         ports:
             - "8001:8001"
         volumes: 
-            - ./src:/var/www/app
+            - ./src:/var/www/backend
+            - ./src:/var/www/frontend
             - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
         depends_on: 
             - php
@@ -46,9 +47,9 @@ services:
         container_name: php
         restart: unless-stopped
         tty: true
-        working_dir: /var/www/app
+        working_dir: /var/www/backend
         volumes: 
-            - ./src:/var/www/app
+            - ./src:/var/www/backend
         ports: 
             - "${PHP_HOST_PORT}:${PHP_DOCKER_CONTAINER_PORT}"
         networks: 

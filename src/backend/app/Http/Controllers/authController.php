@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\helpers\ResponseFormatter;
+use App\Helpers\ResponseFormatter;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
