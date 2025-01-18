@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/widgets/snackbar_widget.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:frontend/common/constant.dart';
 import 'package:frontend/pages/attend_page.dart';
@@ -20,6 +21,73 @@ class SignInDesktopPage extends StatefulWidget {
 class _SignInDesktopPageState extends State<SignInDesktopPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  navigate() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      PageTransition(
+        child: const AttendPage(),
+        type: PageTransitionType.rightToLeft,
+      ),
+      (Route<dynamic> route) => false,
+    );
+  }
+
+  void guardedSnackbar(String message, Color color) {
+    showSnackBar(
+      context,
+      message,
+      color,
+    );
+  }
+
+  void guarderDialog(
+    bool isSuccess, {
+    Function()? onPressed,
+  }) {
+    showDialogWidget(
+      context,
+      true,
+      onPressed: onPressed,
+    );
+  }
+
+  void signIn(
+    AuthenticationProvider authenticationProvider,
+    String email,
+    String password,
+  ) async {
+    if (email.isNotEmpty && password.isNotEmpty) {
+      if (await authenticationProvider.signIn(
+        email,
+        password,
+      )) {
+        guarderDialog(
+          true,
+          onPressed: () {
+            Navigator.of(context).pushAndRemoveUntil(
+              PageTransition(
+                type: PageTransitionType.rightToLeft,
+                child: const AttendPage(),
+              ),
+              (Route<dynamic> route) => false,
+            );
+          },
+        );
+
+        await Future.delayed(const Duration(seconds: 2));
+
+        navigate();
+      } else {
+        guarderDialog(false);
+      }
+    } else {
+      guardedSnackbar(
+        "Isi semua data.",
+        Colors.red,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,19 +155,16 @@ class _SignInDesktopPageState extends State<SignInDesktopPage> {
                   SizedBox(
                     height: height(context) * 0.1,
                   ),
-                  AuthButtonWidget(
-                    text: "Masuk sekarang!",
-                    onPressed: () {
-                      showDialogWidget(
-                        context,
-                        true,
+                  Consumer<AuthenticationProvider>(
+                    builder: (context, authenticationProvider, child) {
+                      return AuthButtonWidget(
+                        text: "Masuk sekarang!",
+                        isLoading: authenticationProvider.isLoading,
                         onPressed: () {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: const AttendPage(),
-                            ),
-                            (Route<dynamic> route) => false,
+                          signIn(
+                            authenticationProvider,
+                            emailController.text,
+                            passwordController.text,
                           );
                         },
                       );

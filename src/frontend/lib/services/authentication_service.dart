@@ -10,8 +10,9 @@ class AuthenticationService {
 
   Future<AuthenticationModel> signIn(
     String email,
-    String password,
-  ) async {
+    String password, {
+    bool isRemember = false,
+  }) async {
     String apiUrl = "${baseAPIURL()}/auth/login";
 
     try {
@@ -26,7 +27,10 @@ class AuthenticationService {
 
       if (response.statusCode == 200) {
         var jsonObject = jsonDecode(response.body);
-        await storage.write(key: "token", value: jsonObject['data']);
+        
+        if(isRemember) {
+          await storage.write(key: "token", value: jsonObject['data']);
+        }
 
         return AuthenticationModel.fromJson(jsonObject);
       } else {
