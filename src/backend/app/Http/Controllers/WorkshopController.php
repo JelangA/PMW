@@ -3,21 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ResponseFormatter;
-use App\Http\Resources\WorkshopResource;
 use App\Models\Workshop;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class WorkshopController extends Controller
 {
 	public function index(): JsonResponse
 	{
 		$workshops = Workshop::all();
-		return ResponseFormatter::success(
-			WorkshopResource::collection($workshops),
-			'Workshops retrieved successfully'
-		);
+		return ResponseFormatter::createAPI(200, 'success', 'Workshop list retrieved successfully', $workshops);
 	}
 	
 	public function show($id): JsonResponse
@@ -25,17 +20,10 @@ class WorkshopController extends Controller
 		$workshop = Workshop::find($id);
 		
 		if (!$workshop) {
-			return ResponseFormatter::error(
-				null,
-				'Workshop not found',
-				404
-			);
+			return ResponseFormatter::createAPI(404, 'error', 'Workshop not found', null);
 		}
 		
-		return ResponseFormatter::success(
-			new WorkshopResource($workshop),
-			'Workshop retrieved successfully'
-		);
+		return ResponseFormatter::createAPI(200, 'success', 'Workshop detail retrieved successfully', $workshop);
 	}
 	
 	public function store(Request $request): JsonResponse
@@ -50,11 +38,7 @@ class WorkshopController extends Controller
 		
 		$workshop = Workshop::create($validated);
 		
-		return ResponseFormatter::success(
-			new WorkshopResource($workshop),
-			'Workshop created successfully',
-			201
-		);
+		return ResponseFormatter::createAPI(201, 'success', 'Workshop created successfully', $workshop);
 	}
 	
 	public function update(Request $request, $id): JsonResponse
@@ -70,19 +54,12 @@ class WorkshopController extends Controller
 		$workshop = Workshop::find($id);
 		
 		if (!$workshop) {
-			return ResponseFormatter::error(
-				null,
-				'Workshop not found',
-				404
-			);
+			return ResponseFormatter::createAPI(404, 'error', 'Workshop not found', null);
 		}
 		
 		$workshop->update($validated);
 		
-		return ResponseFormatter::success(
-			new WorkshopResource($workshop),
-			'Workshop updated successfully'
-		);
+		return ResponseFormatter::createAPI(200, 'success', 'Workshop updated successfully', $workshop);
 	}
 	
 	public function destroy($id): JsonResponse
@@ -90,18 +67,11 @@ class WorkshopController extends Controller
 		$workshop = Workshop::find($id);
 		
 		if (!$workshop) {
-			return ResponseFormatter::error(
-				null,
-				'Workshop not found',
-				404
-			);
+			return ResponseFormatter::createAPI(404, 'error', 'Workshop not found', null);
 		}
 		
 		$workshop->delete();
 		
-		return ResponseFormatter::success(
-			null,
-			'Workshop deleted successfully'
-		);
+		return ResponseFormatter::createAPI(200, 'success', 'Workshop deleted successfully', null);
 	}
 }

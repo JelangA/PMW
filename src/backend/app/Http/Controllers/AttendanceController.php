@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\helpers\ResponseFormatter;
+use App\Helpers\ResponseFormatter;
 use App\Models\Attendance;
 use App\Models\Workshop;
 use Illuminate\Http\Request;
