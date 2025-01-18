@@ -28,6 +28,7 @@
 - **Deskripsi:** Mendaftarkan pengguna baru.
 
 **Headers:**
+
 ```json
 {
   "Accept": "application/json"
@@ -35,20 +36,18 @@
 ```
 
 **Body:**
+
 ```json
 {
   "nim": "231524044",
   "name": "jelang",
-  "major": "Computer Science",
-  "study_program": "D4",
-  "year": "2023",
   "email": "jelang@gmail.com",
-  "status": "active",
   "password": "jelang123"
 }
 ```
 
 **Contoh cURL:**
+
 ```bash
 curl -X POST http://localhost:8000/api/auth/register \
 -H "Accept: application/json" \
@@ -65,6 +64,7 @@ curl -X POST http://localhost:8000/api/auth/register \
 ```
 
 **Respon Sukses:**
+
 ```json
 {
   "metadata": {
@@ -79,6 +79,7 @@ curl -X POST http://localhost:8000/api/auth/register \
 **Respon Gagal:**
 
 **Email Duplikat:**
+
 ```json
 {
   "metadata": {
@@ -96,6 +97,7 @@ curl -X POST http://localhost:8000/api/auth/register \
 - **Deskripsi:** Login pengguna.
 
 **Headers:**
+
 ```json
 {
   "Accept": "application/json"
@@ -103,6 +105,7 @@ curl -X POST http://localhost:8000/api/auth/register \
 ```
 
 **Body:**
+
 ```json
 {
   "email": "jelang@gmail.com",
@@ -111,6 +114,7 @@ curl -X POST http://localhost:8000/api/auth/register \
 ```
 
 **Contoh cURL:**
+
 ```bash
 curl -X POST http://localhost:8000/api/auth/login \
 -H "Accept: application/json" \
@@ -121,6 +125,7 @@ curl -X POST http://localhost:8000/api/auth/login \
 ```
 
 **Respon Sukses:**
+
 ```json
 {
   "metadata": {
@@ -135,6 +140,7 @@ curl -X POST http://localhost:8000/api/auth/login \
 **Respon Gagal:**
 
 **Email Tidak Ditemukan:**
+
 ```json
 {
   "metadata": {
@@ -155,6 +161,7 @@ curl -X POST http://localhost:8000/api/auth/login \
 - **Endpoint:** `GET /api/students`
 
 **Headers:**
+
 ```json
 {
   "Accept": "application/json",
@@ -163,6 +170,7 @@ curl -X POST http://localhost:8000/api/auth/login \
 ```
 
 **Contoh cURL:**
+
 ```bash
 curl -X GET http://localhost:8000/api/students \
 -H "Accept: application/json" \
@@ -170,6 +178,7 @@ curl -X GET http://localhost:8000/api/students \
 ```
 
 **Respon Sukses:**
+
 ```json
 {
   "data": [
@@ -195,12 +204,14 @@ curl -X GET http://localhost:8000/api/students \
   - `nim`: NIM mahasiswa
 
 **Contoh cURL:**
+
 ```bash
 curl -X GET "http://localhost:8000/api/students/search?nim=23152" \
 -H "Accept: application/json"
 ```
 
 **Respon Sukses:**
+
 ```json
 {
   "data": [
@@ -220,6 +231,7 @@ curl -X GET "http://localhost:8000/api/students/search?nim=23152" \
 **Respon Gagal:**
 
 **Tidak Ditemukan:**
+
 ```json
 {
   "message": "No students found for the provided query."
@@ -237,6 +249,7 @@ curl -X GET "http://localhost:8000/api/students/search?nim=23152" \
   - `workshop_id`: id workshop
 
 **Headers:**
+
 ```json
 {
   "Accept": "application/json",
@@ -245,13 +258,15 @@ curl -X GET "http://localhost:8000/api/students/search?nim=23152" \
 ```
 
 **Body:**
+
 ```json
 {
-  "student": "231524046",
+  "student": "231524046"
 }
 ```
 
 **Contoh cURL:**
+
 ```bash
 curl -X POST "http://localhost:8000/api/attendance/2/check-in" \
 -H "Accept: application/json" \
@@ -262,6 +277,7 @@ curl -X POST "http://localhost:8000/api/attendance/2/check-in" \
 ```
 
 **Respon Sukses:**
+
 ```json
 {
   "data": {
@@ -278,6 +294,7 @@ curl -X POST "http://localhost:8000/api/attendance/2/check-in" \
 **Respon Gagal:**
 
 **Di Luar Jadwal:**
+
 ```json
 {
   "message": "Check-in is not allowed outside workshop schedule"
@@ -291,6 +308,7 @@ curl -X POST "http://localhost:8000/api/attendance/2/check-in" \
   - `workshop_id`: id workshop
 
 **Headers:**
+
 ```json
 {
   "Accept": "application/json",
@@ -299,13 +317,15 @@ curl -X POST "http://localhost:8000/api/attendance/2/check-in" \
 ```
 
 **Body:**
+
 ```json
 {
-  "student": "231524046",
+  "student": "231524046"
 }
 ```
 
 **Contoh cURL:**
+
 ```bash
 curl -X POST "http://localhost:8000/api/attendance/2/check-out" \
 -H "Accept: application/json" \
@@ -317,6 +337,7 @@ curl -X POST "http://localhost:8000/api/attendance/2/check-out" \
 ```
 
 **Respon Sukses:**
+
 ```json
 {
   "attendance_id": 1,
@@ -329,10 +350,8 @@ curl -X POST "http://localhost:8000/api/attendance/2/check-out" \
 }
 ```
 
-
-
-
 <!-- USAGE EXAMPLES -->
+
 ## Run App With GNU Make (UNIX Based OS: MacOS, Linux)
 
 - `make run-app-with-setup` : build docker and start all docker containers with Laravel setup
@@ -349,27 +368,29 @@ curl -X POST "http://localhost:8000/api/attendance/2/check-out" \
 - `make code-test`: run php artisan test command
 
 <!-- USAGE EXAMPLES -->
+
 ## Run App Manually
 
 ![preview-docker-laravel](https://user-images.githubusercontent.com/49280352/131224609-401fcd2b-a815-49f2-8164-b6d9b77df87c.gif)
 
 - Create .env file for the Laravel environment from .env.example on src folder
-- Run command ```docker-compose build``` on your terminal
-- Run command ```docker-compose up -d``` on your terminal
-- Run command ```composer install``` on your terminal after going into the php container on docker
-- Run command ```docker exec -it php /bin/sh``` on your terminal
-- Run command ```chmod -R 777 storage``` on your terminal after going into the php container on docker
-- If app:key still empty on .env run ```php artisan key:generate``` on your terminal after going into the php container on docker
-- To run artisan commands like migrate, etc. go to php container using ```docker exec -it php /bin/sh```
+- Run command `docker-compose build` on your terminal
+- Run command `docker-compose up -d` on your terminal
+- Run command `composer install` on your terminal after going into the php container on docker
+- Run command `docker exec -it php /bin/sh` on your terminal
+- Run command `chmod -R 777 storage` on your terminal after going into the php container on docker
+- If app:key still empty on .env run `php artisan key:generate` on your terminal after going into the php container on docker
+- To run artisan commands like migrate, etc. go to php container using `docker exec -it php /bin/sh`
 - Go to http://localhost:8001 or any port you set to open Laravel
 
 ## Notes
 
-- If you encounter a permission error when running Docker, try running it as an administrator or using ```sudo``` in Linux.
+- If you encounter a permission error when running Docker, try running it as an administrator or using `sudo` in Linux.
 - Check the summary of new features in Laravel 11 [here](https://laraveldaily.com/post/laravel-11-main-new-features-changes) or on the official page [here](https://laravel.com/docs/11.x/releases).
 - Right now, I will postpone upgrading to PHP 8.3 because the PHP Plugin in Prettier is not supported yet. [Check the issues here](https://github.com/prettier/plugin-php/issues/2299).
-- Don't forget to run ```npm run format``` inside your php container or run ```make code-format``` before you push your code.
-- Don't forget to run ```php artisan test``` inside your php container or run ```make code-test``` before you push your code.
+- Don't forget to run `npm run format` inside your php container or run `make code-format` before you push your code.
+- Don't forget to run `php artisan test` inside your php container or run `make code-test` before you push your code.
 
 <!-- USAGE EXAMPLES -->
+
 ## Template Docker by ishaqadhel [Source](https://github.com/ishaqadhel/docker-laravel-mysql-nginx-starter)
