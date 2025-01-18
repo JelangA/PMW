@@ -18,6 +18,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Support\Facades\FilamentColor;
+use App\Http\Middleware\RedirectIfNotFilamentAdmin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -55,7 +56,8 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                Authenticate::class,
+                // Authenticate::class,
+                RedirectIfNotFilamentAdmin::class,
             ])
             ->breadcrumbs(false)
             // ->brandLogo(asset('assets/img/polban-ppb-logo.svg'))

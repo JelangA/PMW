@@ -55,4 +55,9 @@ class User extends Authenticatable
 	{
 		return $this->hasOne(Student::class, 'nim', 'nim');
 	}
+
+    public function getIsAdminAttribute()
+    {
+        return $this->nim === null;
+    }
 }
