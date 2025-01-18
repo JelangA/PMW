@@ -37,7 +37,7 @@ class authController
 			$token = $user->createToken($request->email, ['student'])->plainTextToken;
 			
 			if ($token) {
-				return ResponseFormatter::createAPI(200, 'success', $token);
+				return ResponseFormatter::createAPI(200, 'success', '', $token);
 			} else {
 				return ResponseFormatter::createAPI(401, 'failed', 'Login failed');
 			}
@@ -84,7 +84,7 @@ class authController
 	public function profile(Request $request)
 	{
 		$user = $request->user();
-		return ResponseFormatter::createAPI(200, 'success', $user);
+		return ResponseFormatter::createAPI(200, 'success', 'get user profile succes ', $user);
 	}
 	
 	public function logout(Request $request)

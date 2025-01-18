@@ -1,49 +1,40 @@
-# API Documentation for PMW
+# Dokumentasi API PMW
 
-This document provides details about the API endpoints available for the PMW project.
+## Daftar Route
 
-## Base URL
-
-All API requests use the following base URL:
-```
-http://localhost:8000
-```
-
----
-
-## Routes Overview
-
-- [Auth](#auth)
-    - [Register](#11-register)
-    - [Login](#12-login)
-- [Student](#student)
-    - [Get Students](#21-get-students)
-    - [Search Students](#22-search-students)
-    - [Get Student by ID](#23-get-student-by-id)
+1. [Register](#register)
+2. [Login](#login)
+3. [Get Data Mahasiswa](#mendapatkan-data-mahasiswa)
+4. [Mencari Mahasiswa](#mencari-mahasiswa)
+5. [Check-in Kehadiran](#check-in)
+6. [Check-out Kehadiran](#check-out)
+7. [Makfile doploy command](#run-app-with-gnu-make-unix-based-os-macos-linux)
 
 ---
 
-## Authentication
+## Informasi Umum
 
-This API uses **API Key** authentication. Include the API key in the `X-API-Key` header for all requests requiring authentication.
-
-### Example Header:
-```http
-X-API-Key: {{token}}
-```
+- **Base URL:** `http://localhost:8000`
+- **Autentikasi:** Menggunakan API Key dengan header `X-API-Key`.
+- **Format Data:** Semua request dan response menggunakan format JSON.
 
 ---
 
-## Endpoints
+## Autentikasi
 
-### **1. Auth**
+### Register
 
-#### **1.1 Register**
+- **Endpoint:** `POST /api/auth/register`
+- **Deskripsi:** Mendaftarkan pengguna baru.
 
-- **URL:** `POST /api/auth/register`
-- **Description:** Registers a new user.
+**Headers:**
+```json
+{
+  "Accept": "application/json"
+}
+```
 
-##### Request Body:
+**Body:**
 ```json
 {
   "nim": "231524044",
@@ -57,8 +48,23 @@ X-API-Key: {{token}}
 }
 ```
 
-##### Response:
-**Success (200):**
+**Contoh cURL:**
+```bash
+curl -X POST http://localhost:8000/api/auth/register \
+-H "Accept: application/json" \
+-d '{
+  "nim": "231524044",
+  "name": "jelang",
+  "major": "Computer Science",
+  "study_program": "D4",
+  "year": "2023",
+  "email": "jelang@gmail.com",
+  "status": "active",
+  "password": "jelang123"
+}'
+```
+
+**Respon Sukses:**
 ```json
 {
   "metadata": {
@@ -69,26 +75,34 @@ X-API-Key: {{token}}
   "data": null
 }
 ```
-**Failure (400):**
+
+**Respon Gagal:**
+
+**Email Duplikat:**
 ```json
 {
   "metadata": {
     "code": 400,
     "status": "failed",
-    "message": "SQLSTATE[23000]: Integrity constraint violation: ..."
+    "message": "SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'jelang@gmail.com' for key 'users.users_email_unique'"
   },
   "data": null
 }
 ```
 
----
+### Login
 
-#### **1.2 Login**
+- **Endpoint:** `POST /api/auth/login`
+- **Deskripsi:** Login pengguna.
 
-- **URL:** `POST /api/auth/login`
-- **Description:** Authenticates a user and returns an access token.
+**Headers:**
+```json
+{
+  "Accept": "application/json"
+}
+```
 
-##### Request Body:
+**Body:**
 ```json
 {
   "email": "jelang@gmail.com",
@@ -96,8 +110,17 @@ X-API-Key: {{token}}
 }
 ```
 
-##### Response:
-**Success (200):**
+**Contoh cURL:**
+```bash
+curl -X POST http://localhost:8000/api/auth/login \
+-H "Accept: application/json" \
+-d '{
+  "email": "jelang@gmail.com",
+  "password": "jelang123"
+}'
+```
+
+**Respon Sukses:**
 ```json
 {
   "metadata": {
@@ -108,13 +131,16 @@ X-API-Key: {{token}}
   "data": null
 }
 ```
-**Failure (401):**
+
+**Respon Gagal:**
+
+**Email Tidak Ditemukan:**
 ```json
 {
   "metadata": {
     "code": 401,
     "status": "failed",
-    "message": "Invalid password"
+    "message": "Email not found"
   },
   "data": null
 }
@@ -122,17 +148,35 @@ X-API-Key: {{token}}
 
 ---
 
-### **2. Student**
+## Mahasiswa
 
-#### **2.1 Get Students**
+### Mendapatkan Data Mahasiswa
 
-- **URL:** `GET /api/students`
-- **Description:** Retrieves a list of all students.
+- **Endpoint:** `GET /api/students`
 
-##### Response:
-**Success (200):**
+**Headers:**
 ```json
 {
+  "Accept": "application/json",
+  "Authorization": "Bearer {token}"
+}
+```
+
+**Contoh cURL:**
+```bash
+curl -X GET http://localhost:8000/api/students \
+-H "Accept: application/json" \
+-H "Authorization: Bearer {token}"
+```
+
+**Respon Sukses:**
+```json
+{
+  "metadata": {
+    "code": 200,
+    "status": "success",
+    "message": "Data retrieved successfully"
+  },
   "data": [
     {
       "nim": "231524045",
@@ -149,24 +193,26 @@ X-API-Key: {{token}}
 }
 ```
 
----
+### Mencari Mahasiswa
 
-#### **2.2 Search Students**
+- **Endpoint:** `GET /api/students/search`
+- **Query Parameter:**
+  - `nim`: NIM mahasiswa
 
-- **URL:** `GET /api/students/search`
-- **Description:** Searches students based on NIM.
-- **Query Parameters:**
-    - `nim`: Partial or complete NIM (max length: 9).
-
-##### Example:
-```
-GET /api/students/search?nim=23152
+**Contoh cURL:**
+```bash
+curl -X GET "http://localhost:8000/api/students/search?nim=23152" \
+-H "Accept: application/json"
 ```
 
-##### Response:
-**Success (200):**
+**Respon Sukses:**
 ```json
 {
+  "metadata": {
+    "code": 200,
+    "status": "success",
+    "message": "Search completed"
+  },
   "data": [
     {
       "nim": "231524001",
@@ -175,63 +221,198 @@ GET /api/students/search?nim=23152
       "study_program": "D4-Teknik Informatika",
       "year": "2023",
       "email": "alnez.rainansantana.tif423@polban.ac.id",
-      "status": "Mahasiswa Aktif",
-      "created_at": null,
-      "updated_at": null
+      "status": "Mahasiswa Aktif"
     }
   ]
 }
 ```
-**Failure (404):**
+
+**Respon Gagal:**
+
+**Tidak Ditemukan:**
 ```json
 {
-  "message": "No students found for the provided query."
-}
-```
-**Failure (422):**
-```json
-{
-  "message": "The nim field must not be greater than 9 characters."
+  "metadata": {
+    "code": 404,
+    "status": "failed",
+    "message": "No students found for the provided query."
+  },
+  "data": null
 }
 ```
 
 ---
 
-#### **2.3 Get Student by ID**
+## Kehadiran
 
-- **URL:** `GET /api/students/{nim}`
-- **Description:** Retrieves details of a specific student by NIM.
+### Check-in
 
-##### Response:
-**Success (200):**
+- **Endpoint:** `POST /api/attendance/{workshop_id}/check-in`
+- **Query Parameter:**
+  - `workshop_id`: id workshop
+
+**Headers:**
 ```json
 {
+  "Accept": "application/json",
+  "Authorization": "Bearer {token}"
+}
+```
+
+**Body:**
+```json
+{
+  "student": "231524046"
+}
+```
+
+**Contoh cURL:**
+```bash
+curl -X POST "http://localhost:8000/api/attendance/2/check-in" \
+-H "Accept: application/json" \
+-H "Authorization: Bearer {token}" \
+-d '{
+  "student": "231524046"
+}'
+```
+
+**Respon Sukses:**
+```json
+{
+  "metadata": {
+    "code": 200,
+    "status": "success",
+    "message": "Check-in successful"
+  },
   "data": {
-    "nim": "231524046",
-    "name": "John",
-    "major": "Computer Science",
-    "study_program": "D4",
-    "year": "2023",
-    "email": "johnlang@gmail.com",
-    "status": "active",
-    "created_at": "2024-11-23T01:46:52.000000Z",
-    "updated_at": "2024-11-23T01:46:52.000000Z"
+    "attendance_id": null,
+    "student": "231524046",
+    "workshop_id": "2",
+    "check_in_time": "2025-01-14T02:54:39.921304Z",
+    "check_out_time": null,
+    "status": null
   }
 }
 ```
-**Failure (404):**
+
+**Respon Gagal:**
+
+**Di Luar Jadwal:**
 ```json
 {
-  "message": "No query results for model [App\\Models\\Student] 2315240464"
+  "metadata": {
+    "code": 400,
+    "status": "failed",
+    "message": "Check-in is not allowed outside workshop schedule"
+  },
+  "data": null
 }
 ```
 
----
+### Check-out
 
-## Error Codes
+- **Endpoint:** `POST /api/attendance/{workshop_id}/check-out`
+- **Query Parameter:**
+  - `workshop_id`: id workshop
 
-- **200:** Success.
-- **400:** Bad Request.
-- **401:** Unauthorized.
-- **404:** Not Found.
-- **422:** Unprocessable Content.
+**Headers:**
+```json
+{
+  "Accept": "application/json",
+  "Authorization": "Bearer {token}"
+}
+```
+
+**Body:**
+```json
+{
+  "student": "231524046"
+}
+```
+
+**Contoh cURL:**
+```bash
+curl -X POST "http://localhost:8000/api/attendance/2/check-out" \
+-H "Accept: application/json" \
+-H "Authorization: Bearer {token}" \
+-d '{
+  "student": "231524046"
+}'
+```
+
+**Respon Sukses:**
+```json
+{
+  "metadata": {
+    "code": 200,
+    "status": "success",
+    "message": "Check-out successful"
+  },
+  "data": {
+    "attendance_id": 1,
+    "student": "231524046",
+    "workshop_id": 2,
+    "check_in_time": "2025-01-14 02:54:39",
+    "check_out_time": "2025-01-14T03:17:17.907938Z",
+    "created_at": "2025-01-14T02:54:39.000000Z",
+    "updated_at": null
+  }
+}
+```
+
+**Respon Sukses:**
+```json
+{
+  "attendance_id": 1,
+  "student": "231524046",
+  "workshop_id": 2,
+  "check_in_time": "2025-01-14 02:54:39",
+  "check_out_time": "2025-01-14T03:17:17.907938Z",
+  "created_at": "2025-01-14T02:54:39.000000Z",
+  "updated_at": "2025-01-14T03:17:17.000000Z"
+}
+```
+
+
+
+<!-- USAGE EXAMPLES -->
+## Run App With GNU Make (UNIX Based OS: macOS, Linux)
+
+- `make run-app-with-setup` : build docker and start all docker containers with Laravel setup
+- `make run-app-with-setup-db` : build docker and start all docker containers with Laravel setup + database migration and seeder
+- `make run-app` : start all docker container
+- `make kill-app` : kill all docker container
+- `make enter-nginx-container` : enter docker nginx container
+- `make enter-php-container` : enter docker php container
+- `make enter-mysql-container` : enter docker mysql container
+- `make flush-db` : run php migrate fresh command
+- `make flush-db-with-seeding` : run php migrate fresh command with seeding
+- `make code-format-check` : run npm command to run prettier to check your code
+- `make code-format`: run npm command to run prettier to format your code
+- `make code-test`: run php artisan test command
+
+<!-- USAGE EXAMPLES -->
+## Run App Manually
+
+![preview-docker-laravel](https://user-images.githubusercontent.com/49280352/131224609-401fcd2b-a815-49f2-8164-b6d9b77df87c.gif)
+
+- Create .env file for the Laravel environment from .env.example on src folder
+- Run command ```docker-compose build``` on your terminal
+- Run command ```docker-compose up -d``` on your terminal
+- Run command ```composer install``` on your terminal after going into the php container on docker
+- Run command ```docker exec -it php /bin/sh``` on your terminal
+- Run command ```chmod -R 777 storage``` on your terminal after going into the php container on docker
+- If app:key still empty on .env run ```php artisan key:generate``` on your terminal after going into the php container on docker
+- To run artisan commands like migrate, etc. go to php container using ```docker exec -it php /bin/sh```
+- Go to http://localhost:8001 or any port you set to open Laravel
+
+## Notes
+
+- If you encounter a permission error when running Docker, try running it as an administrator or using ```sudo``` in Linux.
+- Check the summary of new features in Laravel 11 [here](https://laraveldaily.com/post/laravel-11-main-new-features-changes) or on the official page [here](https://laravel.com/docs/11.x/releases).
+- Right now, I will postpone upgrading to PHP 8.3 because the PHP Plugin in Prettier is not supported yet. [Check the issues here](https://github.com/prettier/plugin-php/issues/2299).
+- Don't forget to run ```npm run format``` inside your php container or run ```make code-format``` before you push your code.
+- Don't forget to run ```php artisan test``` inside your php container or run ```make code-test``` before you push your code.
+
+<!-- USAGE EXAMPLES -->
+## Template Docker by ishaqadhel [Source](https://github.com/ishaqadhel/docker-laravel-mysql-nginx-starter)
