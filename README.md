@@ -232,7 +232,9 @@ curl -X GET "http://localhost:8000/api/students/search?nim=23152" \
 
 ### Check-in
 
-- **Endpoint:** `POST /api/attendance/check-in`
+- **Endpoint:** `POST /api/attendance/{workshop_id}/check-in`
+- **Query Parameter:**
+  - `workshop_id`: id workshop
 
 **Headers:**
 ```json
@@ -246,18 +248,16 @@ curl -X GET "http://localhost:8000/api/students/search?nim=23152" \
 ```json
 {
   "student": "231524046",
-  "workshop_id": "2"
 }
 ```
 
 **Contoh cURL:**
 ```bash
-curl -X POST http://localhost:8000/api/attendance/check-in \
+curl -X POST "http://localhost:8000/api/attendance/2/check-in" \
 -H "Accept: application/json" \
 -H "Authorization: Bearer {token}" \
 -d '{
   "student": "231524046",
-  "workshop_id": "2"
 }'
 ```
 
@@ -286,7 +286,9 @@ curl -X POST http://localhost:8000/api/attendance/check-in \
 
 ### Check-out
 
-- **Endpoint:** `POST /api/attendance/check-out`
+- **Endpoint:** `POST /api/attendance/{workshop_id}/check-out`
+- **Query Parameter:**
+  - `workshop_id`: id workshop
 
 **Headers:**
 ```json
@@ -300,13 +302,12 @@ curl -X POST http://localhost:8000/api/attendance/check-in \
 ```json
 {
   "student": "231524046",
-  "workshop_id": "2"
 }
 ```
 
 **Contoh cURL:**
 ```bash
-curl -X POST http://localhost:8000/api/attendance/check-out \
+curl -X POST "http://localhost:8000/api/attendance/2/check-out" \
 -H "Accept: application/json" \
 -H "Authorization: Bearer {token}" \
 -d '{
