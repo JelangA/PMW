@@ -45,6 +45,40 @@ class AuthenticationProvider with ChangeNotifier {
 
       _authenticationModel = data;
 
+      setLoading(false);
+
+      if (_authenticationModel != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      setLoading(false);
+      log("$e");
+      throw Exception();
+    }
+  }
+
+  Future<bool> signUp(
+    String nim,
+    String name,
+    String email,
+    String password,
+  ) async {
+    try {
+      setLoading(true);
+
+      final data = await _authenticationService.signUp(
+        nim,
+        name,
+        email,
+        password,
+      );
+
+      _authenticationModel = data;
+
+      setLoading(false);
+
       if (_authenticationModel != null) {
         return true;
       } else {

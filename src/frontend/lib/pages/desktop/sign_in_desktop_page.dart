@@ -41,12 +41,14 @@ class _SignInDesktopPageState extends State<SignInDesktopPage> {
     );
   }
 
-  void guarderDialog(
+  void guardedDialog(
+    String message,
     bool isSuccess, {
     Function()? onPressed,
   }) {
     showDialogWidget(
       context,
+      message,
       true,
       onPressed: onPressed,
     );
@@ -62,7 +64,8 @@ class _SignInDesktopPageState extends State<SignInDesktopPage> {
         email,
         password,
       )) {
-        guarderDialog(
+        guardedDialog(
+          "Kamu berhasil presensi!",
           true,
           onPressed: () {
             Navigator.of(context).pushAndRemoveUntil(
@@ -74,12 +77,11 @@ class _SignInDesktopPageState extends State<SignInDesktopPage> {
             );
           },
         );
-
-        await Future.delayed(const Duration(seconds: 2));
-
-        navigate();
       } else {
-        guarderDialog(false);
+        guardedDialog(
+          "Kamu gagal presensi!\n${authenticationProvider.authenticationModel?.message}",
+          false,
+        );
       }
     } else {
       guardedSnackbar(
