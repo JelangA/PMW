@@ -83,7 +83,7 @@ class AuthController
 	
 	public function profile(Request $request)
 	{
-		$user = $request->user();
+		$user = $request->user()->load('student');
 		return ResponseFormatter::createAPI(200, 'success', 'get user profile succes ', $user);
 	}
 	
