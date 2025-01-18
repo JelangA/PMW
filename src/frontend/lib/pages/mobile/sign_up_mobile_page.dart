@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:frontend/common/constant.dart';
 import 'package:frontend/pages/sign_in_page.dart';
-import 'package:frontend/providers/auth_provider.dart';
+import 'package:frontend/providers/authentication_provider.dart';
 import 'package:frontend/widgets/auth_button_widget.dart';
 import 'package:frontend/widgets/custom_text_form_field_widget.dart';
 import 'package:provider/provider.dart';
@@ -83,7 +83,7 @@ class _SignUpMobilePageState extends State<SignUpMobilePage> {
                       SizedBox(
                         height: defaultPadding,
                       ),
-                      Consumer<AuthProvider>(
+                      Consumer<AuthenticationProvider>(
                         builder: (context, authProvider, child) {
                           return CustomTextFormFieldWidget(
                             label: "Kata sandi",

@@ -3,7 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:frontend/common/constant.dart';
 import 'package:frontend/pages/attend_page.dart';
 import 'package:frontend/pages/sign_up_page.dart';
-import 'package:frontend/providers/auth_provider.dart';
+import 'package:frontend/providers/authentication_provider.dart';
 import 'package:frontend/widgets/alert_dialog_widget.dart';
 import 'package:frontend/widgets/auth_button_widget.dart';
 import 'package:frontend/widgets/custom_text_form_field_widget.dart';
@@ -65,7 +65,7 @@ class _SignInDesktopPageState extends State<SignInDesktopPage> {
                   SizedBox(
                     height: defaultPadding,
                   ),
-                  Consumer<AuthProvider>(
+                  Consumer<AuthenticationProvider>(
                     builder: (context, authProvider, child) {
                       return CustomTextFormFieldWidget(
                         label: "Kata sandi",

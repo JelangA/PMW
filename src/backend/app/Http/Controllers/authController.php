@@ -37,7 +37,7 @@ class AuthController
 			$token = $user->createToken($request->email, ['student'])->plainTextToken;
 			
 			if ($token) {
-				return ResponseFormatter::createAPI(200, 'success', '', $token);
+				return ResponseFormatter::createAPI(200, 'success', 'Successfully login', $token);
 			} else {
 				return ResponseFormatter::createAPI(401, 'failed', 'Login failed');
 			}

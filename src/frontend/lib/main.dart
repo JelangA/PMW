@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/common/constant.dart';
 import 'package:frontend/pages/sign_in_page.dart';
-import 'package:frontend/providers/auth_provider.dart';
+import 'package:frontend/providers/authentication_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class PMWWorkshop extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => AuthProvider(),
+          create: (context) => AuthenticationProvider(),
         ),
       ],
       child: Builder(builder: (context) {

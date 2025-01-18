@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AuthProvider with ChangeNotifier {
+class AuthenticationProvider with ChangeNotifier {
   bool _isRemember = false;
   bool get isRemember => _isRemember;
   bool _isObscureText = true;
