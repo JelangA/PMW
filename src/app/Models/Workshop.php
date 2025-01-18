@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Workshop extends Model
 {
@@ -26,8 +27,8 @@ class Workshop extends Model
 	}
 	
 	// Relasi: Workshop memiliki banyak absensi
-	public function attendances()
+	public function attendances() : HasMany
 	{
-		return $this->hasMany(Attendance::class, 'workshop_id');
+		return $this->hasMany(Attendance::class, 'workshop_id', 'workshop_id');
 	}
 }
