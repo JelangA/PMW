@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/common/constant.dart';
+import 'package:frontend/pages/validate_otp_page.dart';
 import 'package:frontend/providers/authentication_provider.dart';
 import 'package:frontend/widgets/auth_button_widget.dart';
 import 'package:frontend/widgets/custom_text_form_field_widget.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class RequestOtpDesktopPage extends StatefulWidget {
@@ -14,7 +16,7 @@ class RequestOtpDesktopPage extends StatefulWidget {
 
 class _RequestOtpDesktopPageState extends State<RequestOtpDesktopPage> {
   TextEditingController emailController = TextEditingController();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,6 +67,12 @@ class _RequestOtpDesktopPageState extends State<RequestOtpDesktopPage> {
                         text: "Kirim Kode OTP!",
                         isLoading: authenticationProvider.isLoading,
                         onPressed: () {
+                          Navigator.of(context).push(
+                            PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: const ValidateOtpPage(),
+                            ),
+                          );
                           // signIn(
                           //   authenticationProvider,
                           //   emailController.text,
