@@ -18,5 +18,5 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 USER root
 
-RUN chmod 777 -R /var/www/backend
+RUN chmod 775 -R /var/www/backend
 

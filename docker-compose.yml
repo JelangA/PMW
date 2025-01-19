@@ -10,9 +10,12 @@ services:
         tty: true
         ports:
             - "8001:8001"
+            - "8000:8000"
         volumes: 
             - ./src/backend:/var/www/backend/app
-            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - ./src/frontend:/var/www/frontend/build/web
+            - ./nginx/laravel_frontend.conf:/etc/nginx/conf.d/laravel_frontend.conf
+            - ./nginx/laravel_backend.conf:/etc/nginx/conf.d/laravel_backend.conf
         depends_on: 
             - php
             - mysql
