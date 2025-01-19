@@ -66,7 +66,7 @@ class _SignInDesktopPageState extends State<SignInDesktopPage> {
         password,
       )) {
         guardedDialog(
-          "Kamu berhasil presensi!",
+          "Kamu berhasil masuk!",
           true,
           onPressed: () {
             Navigator.of(context).pushAndRemoveUntil(

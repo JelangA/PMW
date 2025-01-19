@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/common/constant.dart';
 import 'package:frontend/models/authentication_model.dart';
 import 'package:http/http.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationService {
   final storage = FlutterSecureStorage(webOptions: getWebOptions());
@@ -29,10 +30,12 @@ class AuthenticationService {
 
       if (response.statusCode == 200) {
         if (isRemember) {
-          await storage.write(key: "isRemember", value: "true");
+          await storage.write(key: "isRemember", value: "1");
+          await storage.write(key: "token", value: jsonObject['data']);
+        } else {
+          await storage.write(key: "isRemember", value: "0");
+          await storage.write(key: "token", value: jsonObject['data']);
         }
-
-        await storage.write(key: "token", value: jsonObject['data']);
 
         return AuthenticationModel.fromJson(jsonObject);
       } else {

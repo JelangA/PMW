@@ -66,7 +66,7 @@ class _SignInMobilePageState extends State<SignInMobilePage> {
         password,
       )) {
         guardedDialog(
-          "Kamu berhasil presensi!",
+          "Kamu berhasil masuk!",
           true,
           onPressed: () {
             Navigator.of(context).pushAndRemoveUntil(

@@ -1,4 +1,3 @@
-// import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +13,7 @@ import 'package:provider/provider.dart';
 
 final storage = FlutterSecureStorage(webOptions: getWebOptions());
 String token = "";
+String isRemember = "";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,11 @@ void main() async {
       ) ??
       "";
 
-  // log("token: $token");
+  isRemember = await storage.read(
+        key: "isRemember",
+        webOptions: getWebOptions(),
+      ) ??
+      "";
   runApp(const PMWWorkshop());
 }
 
@@ -62,7 +66,9 @@ class PMWWorkshop extends StatelessWidget {
             useMaterial3: true,
           ),
           debugShowCheckedModeBanner: false,
-          home: token.isNotEmpty ? const AttendPage() : const SignInPage(),
+          home: token.isNotEmpty && isRemember == "1"
+              ? const AttendPage()
+              : const SignInPage(),
         );
       }),
     );
