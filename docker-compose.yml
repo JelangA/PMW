@@ -16,7 +16,7 @@ services:
             - "8000:8000"
         volumes: 
             - ./src/backend:/var/www/backend/app
-            - ./src/frontend:/var/www/frontend/build/web
+            - ./src/frontend:/var/www/frontend/app
             - ./nginx/flutter_frontend.conf:/etc/nginx/conf.d/flutter_frontend.conf
             - ./nginx/laravel_backend.conf:/etc/nginx/conf.d/laravel_backend.conf
         depends_on: 

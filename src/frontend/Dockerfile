@@ -1,11 +1,8 @@
 FROM nginx:alpine
 
-COPY ./src/frontend /usr/share/nginx/html
+# Salin file yang sudah dibangun ke dalam folder yang tepat
+COPY build/web /usr/share/nginx/html
 
-RUN chmod -R 775 /usr/share/nginx/html/build/web
+# Set izin untuk folder yang sudah disalin
+RUN chmod -R 775 /usr/share/nginx/html
 
-COPY ./nginx/flutter_frontend.conf /etc/nginx/conf.d/
-
-EXPOSE 8000
-
-CMD ["nginx", "-g", "daemon off;"]
