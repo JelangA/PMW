@@ -8,7 +8,8 @@
 4. [Mencari Mahasiswa](#mencari-mahasiswa)
 5. [Check-in Kehadiran](#check-in)
 6. [Check-out Kehadiran](#check-out)
-7. [Makfile doploy command](#run-app-with-gnu-make-unix-based-os-macos-linux)
+7. [Forgot Password](#forgot-password)
+8. [Makfile doploy command](#run-app-with-gnu-make-unix-based-os-macos-linux)
 
 ---
 
@@ -349,6 +350,148 @@ curl -X POST "http://localhost:8000/api/attendance/2/check-out" \
   "updated_at": "2025-01-14T03:17:17.000000Z"
 }
 ```
+
+# Forgot Password
+
+## Mengirim OTP
+
+### Endpoint
+
+`POST /api/forgot-password/send-otp`
+
+### Headers
+
+```json
+{
+  "Accept": "application/json"
+}
+```
+
+### Body
+
+```json
+{
+  "email": "user@example.com"
+}
+```
+
+### Contoh cURL
+
+```bash
+curl -X POST "http://localhost:8000/api/forgot-password/send-otp" \
+-H "Accept: application/json" \
+-d '{
+  "email": "user@example.com"
+}'
+```
+
+### Respon Sukses
+
+```json
+{
+  "metadata": {
+    "code": 200,
+    "status": "success",
+    "message": "OTP sent to your email."
+  },
+  "data": null
+}
+```
+
+### Respon Gagal
+
+```json
+{
+  "message": "The selected email is invalid.",
+  "errors": {
+    "email": [
+      "The selected email is invalid."
+    ]
+  }
+}
+```
+
+---
+
+## Mengubah Password dengan OTP
+
+### Endpoint
+
+`POST /api/forgot-password/change-password`
+
+### Headers
+
+```json
+{
+  "Accept": "application/json"
+}
+```
+
+### Body
+
+```json
+{
+  "email": "user@example.com",
+  "otp": "123456",
+  "new_password": "newpassword123",
+  "new_password_confirmation": "newpassword123"
+}
+```
+
+### Contoh cURL
+
+```bash
+curl -X POST "http://localhost:8000/api/forgot-password/change-password" \
+-H "Accept: application/json" \
+-d '{
+  "email": "user@example.com",
+  "otp": "123456",
+  "new_password": "newpassword123",
+  "new_password_confirmation": "newpassword123"
+}'
+```
+
+### Respon Sukses
+
+```json
+{
+  "metadata": {
+    "code": 200,
+    "status": "success",
+    "message": "Password updated successfully."
+  },
+  "data": null
+}
+```
+
+### Respon Gagal
+
+#### OTP Tidak Valid atau Kedaluwarsa
+
+```json
+{
+  "message": "OTP is invalid or expired."
+}
+```
+
+#### Konfirmasi Password Tidak Cocok
+
+```json
+{
+  "message": "The new password confirmation does not match."
+}
+```
+
+#### Email Tidak Ditemukan
+
+```json
+{
+  "message": "The selected email is invalid."
+}
+```
+
+
+
 
 <!-- USAGE EXAMPLES -->
 
