@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/attend_page.dart';
+import 'package:frontend/pages/request_otp_page.dart';
 import 'package:frontend/widgets/alert_dialog_widget.dart';
 import 'package:frontend/widgets/snackbar_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -180,10 +181,20 @@ class _SignInMobilePageState extends State<SignInMobilePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Lupa kata sandi?",
-                            style: primaryTextStyle.copyWith(
-                              fontWeight: bold,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: const RequestOtpPage(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              "Lupa kata sandi?",
+                              style: primaryTextStyle.copyWith(
+                                fontWeight: bold,
+                              ),
                             ),
                           ),
                           GestureDetector(

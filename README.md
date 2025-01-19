@@ -9,7 +9,7 @@
 5. [Check-in Kehadiran](#check-in)
 6. [Check-out Kehadiran](#check-out)
 7. [Forgot Password](#forgot-password)
-8. [Makfile doploy command](#run-app-with-gnu-make-unix-based-os-macos-linux)
+8. [Makefile deploy command](#run-app-with-gnu-make-unix-based-os-macos-linux)
 
 ---
 
@@ -55,11 +55,7 @@ curl -X POST http://localhost:8000/api/auth/register \
 -d '{
   "nim": "231524044",
   "name": "jelang",
-  "major": "Computer Science",
-  "study_program": "D4",
-  "year": "2023",
   "email": "jelang@gmail.com",
-  "status": "active",
   "password": "jelang123"
 }'
 ```
