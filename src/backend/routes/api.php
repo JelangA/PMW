@@ -2,9 +2,12 @@
 	
 	use App\Http\Controllers\AttendanceController;
 	use App\Http\Controllers\AuthController;
+	use App\Http\Controllers\ForgotPasswordController;
 	use App\Http\Controllers\StudentController;
 	use App\Http\Controllers\WorkshopController;
+	use App\Mail\SendEmail;
 	use Illuminate\Http\Request;
+	use Illuminate\Support\Facades\Mail;
 	use Illuminate\Support\Facades\Route;
 	
 	Route::prefix('auth')->group(function () {
@@ -50,6 +53,9 @@
 		Route::put('/{workshop_id}', [WorkshopController::class, 'update'])->middleware('auth:sanctum');
 		Route::delete('/{workshop_id}', [WorkshopController::class, 'destroy'])->middleware('auth:sanctum');
 	});
-
-
-
+	
+	Route::prefix('forgot-password')->group(function () {
+		Route::post('/send-otp', [ForgotPasswordController::class, 'sendOtp']);
+		Route::post('/change-password', [ForgotPasswordController::class, 'changePassword']);
+	});
+	
