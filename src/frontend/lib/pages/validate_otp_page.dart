@@ -5,7 +5,11 @@ import 'package:frontend/pages/mobile/validate_otp_mobile_page.dart';
 import 'package:frontend/widgets/responsive_layout_widget.dart';
 
 class ValidateOtpPage extends StatefulWidget {
-  const ValidateOtpPage({super.key});
+  const ValidateOtpPage({super.key,
+    required this.email,
+  });
+
+  final String email;
 
   @override
   State<ValidateOtpPage> createState() => _ValidateOtpPageState();
@@ -17,9 +21,9 @@ class _ValidateOtpPageState extends State<ValidateOtpPage> {
     return Title(
       title: 'PMW WORKSHOP POLBAN | Ubah Kata Sandi',
       color: white,
-      child: const ResponsiveLayoutWidget(
-        mobileBody: ValidateOtpMobilePage(),
-        desktopBody: ValidateOtpDesktopPage(),
+      child: ResponsiveLayoutWidget(
+        mobileBody: ValidateOtpMobilePage(email: widget.email),
+        desktopBody: ValidateOtpDesktopPage(email: widget.email,),
       ),
     );
   }

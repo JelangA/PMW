@@ -4,6 +4,7 @@ import 'package:frontend/pages/validate_otp_page.dart';
 import 'package:frontend/providers/authentication_provider.dart';
 import 'package:frontend/widgets/auth_button_widget.dart';
 import 'package:frontend/widgets/custom_text_form_field_widget.dart';
+import 'package:frontend/widgets/snackbar_widget.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,44 @@ class RequestOtpMobilePage extends StatefulWidget {
 
 class _RequestOtpMobilePageState extends State<RequestOtpMobilePage> {
   TextEditingController emailController = TextEditingController();
+
+  void navigate(String email) {
+    Navigator.of(context).push(
+      PageTransition(
+        type: PageTransitionType.rightToLeft,
+        child: ValidateOtpPage(email: email),
+      ),
+    );
+  }
+
+  void guardedSnackbar(String message, Color color) {
+    showSnackBar(
+      context,
+      message,
+      color,
+    );
+  }
+
+  void requestOtp(
+      AuthenticationProvider authenticationProvider, String email) async {
+    if (email.isNotEmpty) {
+      if (await authenticationProvider.requestOtp(email)) {
+        guardedSnackbar(
+          "Kode OTP telah dikirim.",
+          Colors.green,
+        );
+
+        await Future.delayed(const Duration(seconds: 2));
+
+        navigate(email);
+      }
+    } else {
+      guardedSnackbar(
+        "Isi semua data.",
+        Colors.red,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,17 +108,10 @@ class _RequestOtpMobilePageState extends State<RequestOtpMobilePage> {
                             text: "Kirim Kode OTP!",
                             isLoading: authenticationProvider.isLoading,
                             onPressed: () {
-                              Navigator.of(context).push(
-                                PageTransition(
-                                  type: PageTransitionType.rightToLeft,
-                                  child: const ValidateOtpPage(),
-                                ),
+                              requestOtp(
+                                authenticationProvider,
+                                emailController.text,
                               );
-                              // signIn(
-                              //   authenticationProvider,
-                              //   emailController.text,
-                              //   passwordController.text,
-                              // );
                             },
                           );
                         },

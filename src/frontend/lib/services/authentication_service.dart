@@ -75,4 +75,66 @@ class AuthenticationService {
       throw Exception("$e");
     }
   }
+
+  Future<bool> requestOtp(String email) async {
+    String apiUrl = "${baseAPIURL()}/forgot-password/send-otp";
+
+    try {
+      var response = await post(
+        Uri.parse(apiUrl),
+        headers: header(false),
+        body: {
+          "email": email,
+        },
+      );
+
+      // var jsonObject = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        // log(jsonObject.toString());
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      log("$e");
+      throw Exception("$e");
+    }
+  }
+
+  Future<bool> changePassword(
+    String email,
+    String otp,
+    String newPassword,
+    String confirmNewPassword,
+  ) async {
+    String apiUrl = "${baseAPIURL()}/forgot-password/change-password";
+
+    try {
+      var response = await post(
+        Uri.parse(apiUrl),
+        headers: header(false),
+        body: {
+          "email": email,
+          "otp": otp,
+          "new_password": newPassword,
+          "new_password_confirmation": confirmNewPassword,
+        },
+      );
+
+      // var jsonObject = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        // log(jsonObject.toString());
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      log("$e");
+      throw Exception("$e");
+    }
+  }
 }

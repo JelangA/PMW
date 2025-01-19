@@ -97,4 +97,46 @@ class AuthenticationProvider with ChangeNotifier {
       throw Exception();
     }
   }
+
+  Future<bool> requestOtp(String email) async {
+    try {
+      setLoading(true);
+
+      var data = await _authenticationService.requestOtp(email);
+
+      setLoading(false);
+
+      return data;
+    } catch (e) {
+      setLoading(false);
+      log("$e");
+      throw Exception();
+    }
+  }
+
+  Future<bool> changePassword(
+    String email,
+    String otp,
+    String newPassword,
+    String confirmNewPassword,
+  ) async {
+    try {
+      setLoading(true);
+
+      var data = await _authenticationService.changePassword(
+        email,
+        otp,
+        newPassword,
+        confirmNewPassword,
+      );
+
+      setLoading(false);
+
+      return data;
+    } catch (e) {
+      setLoading(false);
+      log("$e");
+      throw Exception();
+    }
+  }
 }
