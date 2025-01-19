@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/common/constant.dart';
+import 'package:frontend/providers/attendance_provider.dart';
 import 'package:frontend/providers/user_provider.dart';
 import 'package:frontend/providers/workshop_provider.dart';
 import 'package:frontend/widgets/custom_button_widget.dart';
 import 'package:frontend/widgets/custom_dropdown_button_form_field_widget.dart';
 import 'package:frontend/widgets/custom_text_form_field_widget.dart';
+import 'package:frontend/widgets/snackbar_widget.dart';
 import 'package:provider/provider.dart';
 
 class AttendDesktopPage extends StatefulWidget {
@@ -20,6 +22,54 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
   TextEditingController departmentProgramStudyController =
       TextEditingController();
   TextEditingController emailController = TextEditingController();
+
+  void guardedSnackbar(String message, Color color) {
+    showSnackBar(
+      context,
+      message,
+      color,
+    );
+  }
+
+  void checkIn(
+    AttendanceProvider attendanceProvider,
+    String workshopId,
+    String nim,
+  ) async {
+    if (workshopId.isNotEmpty) {
+      if (await attendanceProvider.checkIn(nim)) {
+        guardedSnackbar(
+          "Berhasil presensi awal.",
+          Colors.green,
+        );
+      }
+    } else {
+      guardedSnackbar(
+        "Isi semua data.",
+        Colors.red,
+      );
+    }
+  }
+
+  void checkOut(
+    AttendanceProvider attendanceProvider,
+    String workshopId,
+    String nim,
+  ) async {
+    if (workshopId.isNotEmpty) {
+      if (await attendanceProvider.checkOut(nim)) {
+        guardedSnackbar(
+          "Berhasil presensi akhir.",
+          Colors.green,
+        );
+      }
+    } else {
+      guardedSnackbar(
+        "Isi semua data.",
+        Colors.red,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,18 +175,29 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
                     SizedBox(
                       height: defaultPadding,
                     ),
-                    Consumer<WorkshopProvider>(
-                      builder: (context, workshopProvider, child) {
+                    Consumer3<WorkshopProvider, AttendanceProvider,
+                        UserProvider>(
+                      builder: (
+                        context,
+                        workshopProvider,
+                        attendanceProvider,
+                        userProvider,
+                        child,
+                      ) {
                         return CustomDropdownButtonFormFieldWidget(
                           hintText: "Pilih Workshop",
                           items: workshopProvider.workshopModel,
-                          onChanged: (value) {
+                          onChanged: (value) async {
                             final workshop =
                                 workshopProvider.workshopModel.firstWhere(
                               (element) => element.title == value,
                             );
 
                             workshopProvider.setSelectedWorkshop(workshop.id);
+                            await attendanceProvider
+                                .setWorkshopId(workshop.id.toString());
+                            await attendanceProvider.checkAttendanceStatus(
+                                userProvider.userModel!.nim.toString());
                           },
                         );
                       },
@@ -144,13 +205,51 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
                     SizedBox(
                       height: defaultPadding,
                     ),
-                    CustomButtonWidget(
-                      text:
-                          "Kamu telah presensi awal pada\n22 Nov 2024 10:17:43",
-                      onPressed: () {},
-                      color: greenColor,
-                      height: 70,
-                      width: double.maxFinite,
+                    Consumer2<AttendanceProvider, UserProvider>(
+                      builder:
+                          (context, attendanceProvider, userProvider, child) {
+                        final attendance = attendanceProvider.attendanceModel;
+
+                        if (attendance?.checkInTime != null &&
+                            attendance?.checkOutTime != null) {
+                          return CustomButtonWidget(
+                            text:
+                                "Kamu telah presensi awal pada ${attendance!.checkInTime}\ndan presensi akhir pada ${attendance.checkOutTime}",
+                            onPressed: () {},
+                            color: greenColor,
+                            height: 70,
+                            width: double.maxFinite,
+                          );
+                        } else if (attendance?.checkInTime == null) {
+                          return CustomButtonWidget(
+                            text: "Presensi Awal Sekarang!",
+                            onPressed: () {
+                              checkIn(
+                                attendanceProvider,
+                                attendanceProvider.workshopId!,
+                                userProvider.userModel!.nim!,
+                              );
+                            },
+                            color: primaryColor,
+                            height: 70,
+                            width: double.maxFinite,
+                          );
+                        } else {
+                          return CustomButtonWidget(
+                            text: "Presensi Akhir Sekarang!",
+                            onPressed: () {
+                              checkOut(
+                                attendanceProvider,
+                                attendanceProvider.workshopId!,
+                                userProvider.userModel!.nim!,
+                              );
+                            },
+                            color: primaryColor,
+                            height: 70,
+                            width: double.maxFinite,
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),

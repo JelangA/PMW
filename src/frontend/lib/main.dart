@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/common/constant.dart';
 import 'package:frontend/pages/attend_page.dart';
 import 'package:frontend/pages/sign_in_page.dart';
+import 'package:frontend/providers/attendance_provider.dart';
 import 'package:frontend/providers/authentication_provider.dart';
 import 'package:frontend/providers/user_provider.dart';
 import 'package:frontend/providers/workshop_provider.dart';
@@ -46,6 +47,9 @@ class PMWWorkshop extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => WorkshopProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AttendanceProvider(),
         ),
       ],
       child: Builder(builder: (context) {

@@ -63,6 +63,18 @@ class AttendanceController extends Controller
 		return ResponseFormatter::createAPI(200, 'success', 'Attendance deleted successfully', $attendance);
 	}
 
+	// Mengambil data attendance berdasarkan workshop id dan nim mahasiswa
+	public function checkAttendanceStatus(Request $request) {
+		$request->validate([
+			'student' => 'required|exists:students,nim',
+		]);
+
+		$attendance = Attendance::where('workshop_id', $request->workshop_id)
+                        ->where('student', $request->student)
+                        ->first();
+		return ResponseFormatter::createAPI(200, 'success', 'Berhasil get data kehadiran', $attendance);
+	}
+
 	// Absensi Check-in
 	public function checkIn(Request $request, $workshop_id)
 	{

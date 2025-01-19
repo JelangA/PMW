@@ -32,9 +32,9 @@
 	});
 	
 	Route::prefix('attendance')->group(function () {
+		Route::post('/{workshop_id}/check-attendance-status', [AttendanceController::class, 'checkAttendanceStatus'])->middleware('auth:sanctum');
 		Route::post('/{workshop_id}/check-in', [AttendanceController::class, 'checkIn'])->middleware('auth:sanctum');
 		Route::post('/{workshop_id}/check-out', [AttendanceController::class, 'checkOut'])->middleware('auth:sanctum');
-		
 		
 		// belum diubah untuk admin
 		Route::get('/', [AttendanceController::class, 'index']);

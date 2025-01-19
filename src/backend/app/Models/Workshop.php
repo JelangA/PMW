@@ -19,6 +19,10 @@ class Workshop extends Model
 	protected $fillable = [
 		'title', 'description', 'start_time', 'end_time', 'location'
 	];
+
+	protected $casts = [
+		'workshop_id' => 'integer',
+	];
 	
 	// Relasi: Workshop memiliki banyak QR Code
 	public function qrCodes()

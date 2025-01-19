@@ -9,12 +9,14 @@ class CustomButtonWidget extends StatelessWidget {
     required this.color,
     required this.height,
     required this.width,
+    this.isLoading = false,
   });
 
   final String text;
   final Function() onPressed;
   final Color color;
   final double height, width;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +32,18 @@ class CustomButtonWidget extends StatelessWidget {
         ),
       ),
       onPressed: onPressed,
-      child: Text(
-        text,
-        style: secondaryTextStyle,
-        textAlign: TextAlign.center,
-      ),
+      child: isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+                color: white,
+                strokeWidth: 2,
+              ),
+            )
+          : Text(
+              text,
+              style: secondaryTextStyle,
+              textAlign: TextAlign.center,
+            ),
     );
   }
 }
