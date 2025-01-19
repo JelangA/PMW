@@ -1,4 +1,4 @@
-import 'dart:developer';
+// import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +7,8 @@ import 'package:frontend/common/constant.dart';
 import 'package:frontend/pages/attend_page.dart';
 import 'package:frontend/pages/sign_in_page.dart';
 import 'package:frontend/providers/authentication_provider.dart';
+import 'package:frontend/providers/user_provider.dart';
+import 'package:frontend/providers/workshop_provider.dart';
 import 'package:provider/provider.dart';
 
 final storage = FlutterSecureStorage(webOptions: getWebOptions());
@@ -25,7 +27,7 @@ void main() async {
       ) ??
       "";
 
-  log("token: $token");
+  // log("token: $token");
   runApp(const PMWWorkshop());
 }
 
@@ -38,6 +40,12 @@ class PMWWorkshop extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => AuthenticationProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => WorkshopProvider(),
         ),
       ],
       child: Builder(builder: (context) {

@@ -60,9 +60,9 @@ class AdminPanelProvider extends PanelProvider
                 RedirectIfNotFilamentAdmin::class,
             ])
             ->breadcrumbs(false)
-            // ->brandLogo(asset('assets/img/polban-ppb-logo.svg'))
+            ->brandLogo(asset('assets/img/pmwpolban.png'))
             ->font('Poppins')
-            // ->favicon(asset('assets/img/0001.png'))
+            ->favicon(asset('assets/img/favicon-2.png'))
             ->brandName('PMW POLBAN');
     }
 }
