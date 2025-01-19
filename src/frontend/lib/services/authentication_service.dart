@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/common/constant.dart';
 import 'package:frontend/models/authentication_model.dart';
@@ -30,8 +29,10 @@ class AuthenticationService {
 
       if (response.statusCode == 200) {
         if (isRemember) {
-          await storage.write(key: "token", value: jsonObject['data']);
+          await storage.write(key: "isRemember", value: "true");
         }
+
+        await storage.write(key: "token", value: jsonObject['data']);
 
         return AuthenticationModel.fromJson(jsonObject);
       } else {

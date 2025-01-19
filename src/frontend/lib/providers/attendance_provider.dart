@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:frontend/models/attendance_model.dart';
 import 'package:frontend/services/attendance_service.dart';
@@ -69,7 +68,7 @@ class AttendanceProvider with ChangeNotifier {
 
       setLoading(false);
 
-      if (_attendanceModel != null) {
+      if (_attendanceModel?.id != null) {
         return true;
       } else {
         return false;
@@ -98,7 +97,7 @@ class AttendanceProvider with ChangeNotifier {
 
       setLoading(false);
 
-      if (_attendanceModel != null) {
+      if (_attendanceModel?.id != null) {
         return true;
       } else {
         return false;

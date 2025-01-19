@@ -86,9 +86,9 @@ class _SignUpDesktopPageState extends State<SignUpDesktopPage> {
           },
         );
       } else {
-        guardedDialog(
-          "Kamu gagal daftar!\n${authenticationProvider.authenticationModel?.message}",
-          false,
+        guardedSnackbar(
+          "${authenticationProvider.authenticationModel?.message}.",
+          Colors.red,
         );
       }
     } else {

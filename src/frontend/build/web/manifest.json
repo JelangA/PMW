@@ -1,0 +1,35 @@
+{
+    "name": "PMW WORKSHOP POLBAN",
+    "short_name": "PMW WORKSHOP POLBAN",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#394EEA",
+    "theme_color": "#394EEA",
+    "description": "PMW WORKSHOP POLBAN",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/maskable_icon_x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/maskable_icon_x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/maskable_icon_x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/maskable_icon_x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

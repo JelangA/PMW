@@ -42,6 +42,11 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
           "Berhasil presensi awal.",
           Colors.green,
         );
+      } else {
+        guardedSnackbar(
+          "Workshop belum dimulai.",
+          Colors.red,
+        );
       }
     } else {
       guardedSnackbar(
@@ -61,6 +66,11 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
         guardedSnackbar(
           "Berhasil presensi akhir.",
           Colors.green,
+        );
+      } else {
+        guardedSnackbar(
+          "${attendanceProvider.attendanceModel?.message}.",
+          Colors.red,
         );
       }
     } else {
@@ -219,6 +229,7 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
                             color: greenColor,
                             height: 70,
                             width: double.maxFinite,
+                            isLoading: attendanceProvider.isLoading,
                           );
                         } else if (attendance?.checkInTime == null) {
                           return CustomButtonWidget(
@@ -233,6 +244,7 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
                             color: primaryColor,
                             height: 70,
                             width: double.maxFinite,
+                            isLoading: attendanceProvider.isLoading,
                           );
                         } else {
                           return CustomButtonWidget(
@@ -247,6 +259,7 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
                             color: primaryColor,
                             height: 70,
                             width: double.maxFinite,
+                            isLoading: attendanceProvider.isLoading,
                           );
                         }
                       },

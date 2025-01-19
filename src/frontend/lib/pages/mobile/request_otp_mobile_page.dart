@@ -47,6 +47,11 @@ class _RequestOtpMobilePageState extends State<RequestOtpMobilePage> {
         await Future.delayed(const Duration(seconds: 2));
 
         navigate(email);
+      } else {
+        guardedSnackbar(
+          "${authenticationProvider.authenticationModel?.message}.",
+          Colors.red,
+        );
       }
     } else {
       guardedSnackbar(

@@ -79,9 +79,9 @@ class _SignInMobilePageState extends State<SignInMobilePage> {
           },
         );
       } else {
-        guardedDialog(
-          "Kamu gagal presensi!\n${authenticationProvider.authenticationModel?.message}",
-          false,
+        guardedSnackbar(
+          "${authenticationProvider.authenticationModel?.message}.",
+          Colors.red,
         );
       }
     } else {

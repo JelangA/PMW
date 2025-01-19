@@ -66,6 +66,11 @@ class _ValidateOtpDesktopPageState extends State<ValidateOtpDesktopPage> {
           await Future.delayed(const Duration(seconds: 2));
 
           navigate();
+        } else {
+          guardedSnackbar(
+            "${authenticationProvider.authenticationModel?.message}.",
+            Colors.red,
+          );
         }
       } else {
         guardedSnackbar(
