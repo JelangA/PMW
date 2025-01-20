@@ -61,7 +61,13 @@ class AuthenticationProvider with ChangeNotifier {
       }
     } catch (e) {
       setLoading(false);
-      log("$e");
+      log("Error Sign In Provider: $e");
+      _authenticationModel = AuthenticationModel(
+        code: 500,
+        status: "Error",
+        message: "$e",
+        data: null,
+      );
       throw Exception();
     }
   }
@@ -93,7 +99,13 @@ class AuthenticationProvider with ChangeNotifier {
       }
     } catch (e) {
       setLoading(false);
-      log("$e");
+      log("Error Sign Up Provider: $e");
+      _authenticationModel = AuthenticationModel(
+        code: 500,
+        status: "Error",
+        message: "$e",
+        data: null,
+      );
       throw Exception();
     }
   }
@@ -109,7 +121,13 @@ class AuthenticationProvider with ChangeNotifier {
       return data;
     } catch (e) {
       setLoading(false);
-      log("$e");
+      log("Error Request OTP Provider: $e");
+      _authenticationModel = AuthenticationModel(
+        code: 500,
+        status: "Error",
+        message: "$e",
+        data: null,
+      );
       throw Exception();
     }
   }
@@ -135,7 +153,13 @@ class AuthenticationProvider with ChangeNotifier {
       return data;
     } catch (e) {
       setLoading(false);
-      log("$e");
+      log("Error Change Password Provider: $e");
+      _authenticationModel = AuthenticationModel(
+        code: 500,
+        status: "Error",
+        message: "$e",
+        data: null,
+      );
       throw Exception();
     }
   }

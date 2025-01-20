@@ -56,19 +56,26 @@ class _ValidateOtpDesktopPageState extends State<ValidateOtpDesktopPage> {
         newPassword.isNotEmpty &&
         confirmNewPassword.isNotEmpty) {
       if (newPassword == confirmNewPassword) {
-        if (await authenticationProvider.changePassword(
-            email, otp, newPassword, confirmNewPassword)) {
-          guardedSnackbar(
-            "Kata sandi berhasil diubah.",
-            Colors.green,
-          );
+        try {
+          if (await authenticationProvider.changePassword(
+              email, otp, newPassword, confirmNewPassword)) {
+            guardedSnackbar(
+              "Kata sandi berhasil diubah.",
+              Colors.green,
+            );
 
-          await Future.delayed(const Duration(seconds: 2));
+            await Future.delayed(const Duration(seconds: 2));
 
-          navigate();
-        } else {
+            navigate();
+          } else {
+            guardedSnackbar(
+              "${authenticationProvider.authenticationModel?.message}.",
+              Colors.red,
+            );
+          }
+        } catch (e) {
           guardedSnackbar(
-            "${authenticationProvider.authenticationModel?.message}.",
+            "Terjadi kesalahan: ${authenticationProvider.authenticationModel?.message}.",
             Colors.red,
           );
         }

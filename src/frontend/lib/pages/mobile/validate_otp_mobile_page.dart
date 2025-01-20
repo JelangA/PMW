@@ -9,7 +9,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class ValidateOtpMobilePage extends StatefulWidget {
-  const ValidateOtpMobilePage({super.key,
+  const ValidateOtpMobilePage({
+    super.key,
     required this.email,
   });
 
@@ -55,19 +56,26 @@ class _ValidateOtpMobilePageState extends State<ValidateOtpMobilePage> {
         newPassword.isNotEmpty &&
         confirmNewPassword.isNotEmpty) {
       if (newPassword == confirmNewPassword) {
-        if (await authenticationProvider.changePassword(
-            email, otp, newPassword, confirmNewPassword)) {
-          guardedSnackbar(
-            "Kata sandi berhasil diubah.",
-            Colors.green,
-          );
+        try {
+          if (await authenticationProvider.changePassword(
+              email, otp, newPassword, confirmNewPassword)) {
+            guardedSnackbar(
+              "Kata sandi berhasil diubah.",
+              Colors.green,
+            );
 
-          await Future.delayed(const Duration(seconds: 2));
+            await Future.delayed(const Duration(seconds: 2));
 
-          navigate();
-        } else {
+            navigate();
+          } else {
+            guardedSnackbar(
+              "${authenticationProvider.authenticationModel?.message}.",
+              Colors.red,
+            );
+          }
+        } catch (e) {
           guardedSnackbar(
-            "${authenticationProvider.authenticationModel?.message}.",
+            "Terjadi kesalahan: ${authenticationProvider.authenticationModel?.message}.",
             Colors.red,
           );
         }

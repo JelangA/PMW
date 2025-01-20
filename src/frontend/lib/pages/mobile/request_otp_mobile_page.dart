@@ -38,18 +38,25 @@ class _RequestOtpMobilePageState extends State<RequestOtpMobilePage> {
   void requestOtp(
       AuthenticationProvider authenticationProvider, String email) async {
     if (email.isNotEmpty) {
-      if (await authenticationProvider.requestOtp(email)) {
-        guardedSnackbar(
-          "Kode OTP telah dikirim.",
-          Colors.green,
-        );
+      try {
+        if (await authenticationProvider.requestOtp(email)) {
+          guardedSnackbar(
+            "Kode OTP telah dikirim.",
+            Colors.green,
+          );
 
-        await Future.delayed(const Duration(seconds: 2));
+          await Future.delayed(const Duration(seconds: 2));
 
-        navigate(email);
-      } else {
+          navigate(email);
+        } else {
+          guardedSnackbar(
+            "${authenticationProvider.authenticationModel?.message}.",
+            Colors.red,
+          );
+        }
+      } catch (e) {
         guardedSnackbar(
-          "${authenticationProvider.authenticationModel?.message}.",
+          "Terjadi kesalahan. ${authenticationProvider.authenticationModel?.message}.",
           Colors.red,
         );
       }

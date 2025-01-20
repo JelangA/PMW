@@ -29,7 +29,7 @@ class UserService {
         return UserModel.fromJson(jsonObject);
       }
     } catch (e) {
-      log("$e");
+      log("Error Get Profile Service: $e");
       throw Exception("$e");
     }
   }

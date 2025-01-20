@@ -14,6 +14,10 @@ use Laravel\Sanctum\Http\Middleware\CheckAbilities;
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // $middleware->use([
+        //     \Fruitcake\Cors\HandleCors::class,
+        // ]);
+
 		$middleware->alias([
 			'abilities' => CheckAbilities::class,
 			'ability' => CheckAbilities::class,

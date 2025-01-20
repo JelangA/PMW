@@ -54,28 +54,35 @@ class _SignUpMobilePageState extends State<SignUpMobilePage> {
         name.isNotEmpty &&
         email.isNotEmpty &&
         password.isNotEmpty) {
-      if (await authenticationProvider.signUp(
-        nim,
-        name,
-        email,
-        password,
-      )) {
-        guardedDialog(
-          "Kamu berhasil daftar!",
-          true,
-          onPressed: () {
-            Navigator.of(context).pushAndRemoveUntil(
-              PageTransition(
-                type: PageTransitionType.rightToLeft,
-                child: const SignInPage(),
-              ),
-              (Route<dynamic> route) => false,
-            );
-          },
-        );
-      } else {
+      try {
+        if (await authenticationProvider.signUp(
+          nim,
+          name,
+          email,
+          password,
+        )) {
+          guardedDialog(
+            "Kamu berhasil daftar!",
+            true,
+            onPressed: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                PageTransition(
+                  type: PageTransitionType.rightToLeft,
+                  child: const SignInPage(),
+                ),
+                (Route<dynamic> route) => false,
+              );
+            },
+          );
+        } else {
+          guardedSnackbar(
+            "${authenticationProvider.authenticationModel?.message}.",
+            Colors.red,
+          );
+        }
+      } catch (e) {
         guardedSnackbar(
-          "${authenticationProvider.authenticationModel?.message}.",
+          "Terjadi kesalahan: ${authenticationProvider.authenticationModel?.message}.",
           Colors.red,
         );
       }

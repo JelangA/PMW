@@ -46,7 +46,19 @@ class AttendanceProvider with ChangeNotifier {
       }
     } catch (e) {
       setLoading(false);
-      log("$e");
+      log("Error Check Attendance Status Provider: $e");
+      _attendanceModel = AttendanceModel(
+        code: 500,
+        status: "Error",
+        message: "$e",
+        id: null,
+        nim: null,
+        checkInTime: null,
+        checkOutTime: null,
+        createdAt: null,
+        updatedAt: null,
+        workshopId: null,
+      );
       throw Exception();
     }
   }
@@ -75,7 +87,19 @@ class AttendanceProvider with ChangeNotifier {
       }
     } catch (e) {
       setLoading(false);
-      log("$e");
+      log("Error Check In Provider: $e");
+      _attendanceModel = AttendanceModel(
+        code: 500,
+        status: "Error",
+        message: "$e",
+        id: null,
+        nim: null,
+        checkInTime: null,
+        checkOutTime: null,
+        createdAt: null,
+        updatedAt: null,
+        workshopId: null,
+      );
       throw Exception();
     }
   }
@@ -104,7 +128,19 @@ class AttendanceProvider with ChangeNotifier {
       }
     } catch (e) {
       setLoading(false);
-      log("$e");
+      log("Error Check Out Provider: $e");
+      _attendanceModel = AttendanceModel(
+        code: 500,
+        status: "Error",
+        message: "$e",
+        id: null,
+        nim: null,
+        checkInTime: null,
+        checkOutTime: null,
+        createdAt: null,
+        updatedAt: null,
+        workshopId: null,
+      );
       throw Exception();
     }
   }

@@ -39,7 +39,7 @@ class WorkshopProvider with ChangeNotifier {
       }
     } catch (e) {
       setLoading(false);
-      log("$e");
+      log("Error Get All Workshop Provider: $e");
       throw Exception();
     }
   }

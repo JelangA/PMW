@@ -61,26 +61,30 @@ class _SignInDesktopPageState extends State<SignInDesktopPage> {
     String password,
   ) async {
     if (email.isNotEmpty && password.isNotEmpty) {
-      if (await authenticationProvider.signIn(
-        email,
-        password,
-      )) {
-        guardedDialog(
-          "Kamu berhasil masuk!",
-          true,
-          onPressed: () {
-            Navigator.of(context).pushAndRemoveUntil(
-              PageTransition(
-                type: PageTransitionType.rightToLeft,
-                child: const AttendPage(),
-              ),
-              (Route<dynamic> route) => false,
-            );
-          },
-        );
-      } else {
+      try {
+        if (await authenticationProvider.signIn(email, password)) {
+          guardedDialog(
+            "Kamu berhasil masuk!",
+            true,
+            onPressed: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                PageTransition(
+                  type: PageTransitionType.rightToLeft,
+                  child: const AttendPage(),
+                ),
+                (Route<dynamic> route) => false,
+              );
+            },
+          );
+        } else {
+          guardedSnackbar(
+            "${authenticationProvider.authenticationModel?.message}.",
+            Colors.red,
+          );
+        }
+      } catch (e) {
         guardedSnackbar(
-          "${authenticationProvider.authenticationModel?.message}.",
+          "Terjadi kesalahan: ${authenticationProvider.authenticationModel?.message}.",
           Colors.red,
         );
       }

@@ -33,7 +33,7 @@ class WorkshopService {
         return [];
       }
     } catch (e) {
-      log("$e");
+      log("Error Get All Workshop Service: $e");
       throw Exception("$e");
     }
   }

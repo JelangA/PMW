@@ -30,10 +30,22 @@ class UserProvider with ChangeNotifier {
       } else {
         return false;
       }
-
     } catch (e) {
       setLoading(false);
-      log("$e");
+      log("Error Get Profile User Provider: $e");
+      _userModel = UserModel(
+        code: 500,
+        status: "Error",
+        message: "$e",
+        id: null,
+        nim: null,
+        name: null,
+        email: null,
+        major: null,
+        programStudy: null,
+        createdAt: null,
+        updatedAt: null,
+      );
       throw Exception();
     }
   }

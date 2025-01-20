@@ -37,14 +37,21 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
     String nim,
   ) async {
     if (workshopId.isNotEmpty) {
-      if (await attendanceProvider.checkIn(nim)) {
+      try {
+        if (await attendanceProvider.checkIn(nim)) {
+          guardedSnackbar(
+            "Berhasil presensi awal.",
+            Colors.green,
+          );
+        } else {
+          guardedSnackbar(
+            "${attendanceProvider.attendanceModel?.message}",
+            Colors.red,
+          );
+        }
+      } catch (e) {
         guardedSnackbar(
-          "Berhasil presensi awal.",
-          Colors.green,
-        );
-      } else {
-        guardedSnackbar(
-          "Workshop belum dimulai.",
+          "Terjadi kesalahan: ${attendanceProvider.attendanceModel?.message}",
           Colors.red,
         );
       }
@@ -62,14 +69,21 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
     String nim,
   ) async {
     if (workshopId.isNotEmpty) {
-      if (await attendanceProvider.checkOut(nim)) {
+      try {
+        if (await attendanceProvider.checkOut(nim)) {
+          guardedSnackbar(
+            "Berhasil presensi akhir.",
+            Colors.green,
+          );
+        } else {
+          guardedSnackbar(
+            "${attendanceProvider.attendanceModel?.message}.",
+            Colors.red,
+          );
+        }
+      } catch (e) {
         guardedSnackbar(
-          "Berhasil presensi akhir.",
-          Colors.green,
-        );
-      } else {
-        guardedSnackbar(
-          "${attendanceProvider.attendanceModel?.message}.",
+          "Terjadi kesalahan: ${attendanceProvider.attendanceModel?.message}",
           Colors.red,
         );
       }

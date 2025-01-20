@@ -31,27 +31,11 @@ class AttendanceService {
 
       var jsonObject = jsonDecode(response.body);
 
-      log(jsonObject.toString());
+      // log(jsonObject.toString());
 
       return AttendanceModel.fromJson(jsonObject);
-      // if (jsonObject['data'] != null) {
-      //   return AttendanceModel.fromJson(jsonObject);
-      // } else {
-      //   return AttendanceModel(
-      //     code: 404,
-      //     status: "success",
-      //     message: "Kamu belum presensi awal.",
-      //     id: null,
-      //     nim: nim,
-      //     checkInTime: null,
-      //     checkOutTime: null,
-      //     createdAt: null,
-      //     updatedAt: null,
-      //     workshopId: null,
-      //   );
-      // }
     } catch (e) {
-      log("$e");
+      log("Error Check Attendance Status Service: $e");
       throw Exception("$e");
     }
   }
@@ -79,7 +63,7 @@ class AttendanceService {
 
       return AttendanceModel.fromJson(jsonObject);
     } catch (e) {
-      log("$e");
+      log("Error Check In Service: $e");
       throw Exception("$e");
     }
   }
@@ -107,7 +91,7 @@ class AttendanceService {
 
       return AttendanceModel.fromJson(jsonObject);
     } catch (e) {
-      log("$e");
+      log("Error Check Out Service: $e");
       throw Exception("$e");
     }
   }

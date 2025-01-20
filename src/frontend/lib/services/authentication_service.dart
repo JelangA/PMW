@@ -4,7 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/common/constant.dart';
 import 'package:frontend/models/authentication_model.dart';
 import 'package:http/http.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
+
 
 class AuthenticationService {
   final storage = FlutterSecureStorage(webOptions: getWebOptions());
@@ -42,7 +42,7 @@ class AuthenticationService {
         return AuthenticationModel.fromJson(jsonObject);
       }
     } catch (e) {
-      log("$e");
+      log("Error Sign In Service: $e");
       throw Exception("$e");
     }
   }
@@ -75,7 +75,7 @@ class AuthenticationService {
         return AuthenticationModel.fromJson(jsonObject);
       }
     } catch (e) {
-      log("$e");
+      log("Error Sign Up Service: $e");
       throw Exception("$e");
     }
   }
@@ -102,7 +102,7 @@ class AuthenticationService {
         return false;
       }
     } catch (e) {
-      log("$e");
+      log("Error Request OTP Service: $e");
       throw Exception("$e");
     }
   }
@@ -137,7 +137,7 @@ class AuthenticationService {
         return false;
       }
     } catch (e) {
-      log("$e");
+      log("Error Change Password Service: $e");
       throw Exception("$e");
     }
   }
