@@ -88,13 +88,13 @@ class _SignUpDesktopPageState extends State<SignUpDesktopPage> {
           );
         } else {
           guardedSnackbar(
-            "${authenticationProvider.authenticationModel?.message}.",
+            "${authenticationProvider.authenticationModel?.metadata?.message}.",
             Colors.red,
           );
         }
       } catch (e) {
         guardedSnackbar(
-          "Terjadi kesalahan: ${authenticationProvider.authenticationModel?.message}.",
+          "Terjadi kesalahan: ${authenticationProvider.authenticationModel?.metadata?.message}.",
           Colors.red,
         );
       }

@@ -1,12 +1,14 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:frontend/common/exception/app_exception.dart';
 import 'package:frontend/models/attendance_model.dart';
+import 'package:frontend/models/generic_response_model.dart';
 import 'package:frontend/services/attendance_service.dart';
 
 class AttendanceProvider with ChangeNotifier {
   final _attendanceService = AttendanceService();
-  AttendanceModel? _attendanceModel;
-  AttendanceModel? get attendanceModel => _attendanceModel;
+  GenericResponseModel<AttendanceModel>? _attendanceModel;
+  GenericResponseModel<AttendanceModel>? get attendanceModel => _attendanceModel;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   String? _workshopId;
@@ -47,19 +49,19 @@ class AttendanceProvider with ChangeNotifier {
     } catch (e) {
       setLoading(false);
       log("Error Check Attendance Status Provider: $e");
-      _attendanceModel = AttendanceModel(
-        code: 500,
-        status: "Error",
-        message: "$e",
-        id: null,
-        nim: null,
-        checkInTime: null,
-        checkOutTime: null,
-        createdAt: null,
-        updatedAt: null,
-        workshopId: null,
-      );
-      throw Exception();
+      // _attendanceModel = AttendanceModel(
+      //   code: 500,
+      //   status: "Error",
+      //   message: "$e",
+      //   id: null,
+      //   nim: null,
+      //   checkInTime: null,
+      //   checkOutTime: null,
+      //   createdAt: null,
+      //   updatedAt: null,
+      //   workshopId: null,
+      // );
+      throw AppException("Gagal memuat data. Coba lagi nanti.");
     }
   }
 
@@ -80,7 +82,7 @@ class AttendanceProvider with ChangeNotifier {
 
       setLoading(false);
 
-      if (_attendanceModel?.id != null) {
+      if (_attendanceModel?.data != null) {
         return true;
       } else {
         return false;
@@ -88,19 +90,19 @@ class AttendanceProvider with ChangeNotifier {
     } catch (e) {
       setLoading(false);
       log("Error Check In Provider: $e");
-      _attendanceModel = AttendanceModel(
-        code: 500,
-        status: "Error",
-        message: "$e",
-        id: null,
-        nim: null,
-        checkInTime: null,
-        checkOutTime: null,
-        createdAt: null,
-        updatedAt: null,
-        workshopId: null,
-      );
-      throw Exception();
+      // _attendanceModel = AttendanceModel(
+      //   code: 500,
+      //   status: "Error",
+      //   message: "$e",
+      //   id: null,
+      //   nim: null,
+      //   checkInTime: null,
+      //   checkOutTime: null,
+      //   createdAt: null,
+      //   updatedAt: null,
+      //   workshopId: null,
+      // );
+      throw AppException("Gagal prensesi awal. Coba lagi nanti.");
     }
   }
 
@@ -121,7 +123,7 @@ class AttendanceProvider with ChangeNotifier {
 
       setLoading(false);
 
-      if (_attendanceModel?.id != null) {
+      if (_attendanceModel?.data != null) {
         return true;
       } else {
         return false;
@@ -129,19 +131,19 @@ class AttendanceProvider with ChangeNotifier {
     } catch (e) {
       setLoading(false);
       log("Error Check Out Provider: $e");
-      _attendanceModel = AttendanceModel(
-        code: 500,
-        status: "Error",
-        message: "$e",
-        id: null,
-        nim: null,
-        checkInTime: null,
-        checkOutTime: null,
-        createdAt: null,
-        updatedAt: null,
-        workshopId: null,
-      );
-      throw Exception();
+      // _attendanceModel = AttendanceModel(
+      //   code: 500,
+      //   status: "Error",
+      //   message: "$e",
+      //   id: null,
+      //   nim: null,
+      //   checkInTime: null,
+      //   checkOutTime: null,
+      //   createdAt: null,
+      //   updatedAt: null,
+      //   workshopId: null,
+      // );
+      throw AppException("Gagal prensesi akhir. Coba lagi nanti.");
     }
   }
 }

@@ -1,13 +1,14 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:frontend/common/exception/app_exception.dart';
 import 'package:frontend/models/authentication_model.dart';
+import 'package:frontend/models/generic_response_model.dart';
 import 'package:frontend/services/authentication_service.dart';
 
 class AuthenticationProvider with ChangeNotifier {
   final _authenticationService = AuthenticationService();
-  AuthenticationModel? _authenticationModel;
-  AuthenticationModel? get authenticationModel => _authenticationModel;
+  GenericResponseModel<AuthenticationModel>? _authenticationModel;
+  GenericResponseModel<AuthenticationModel>? get authenticationModel => _authenticationModel;
   bool _isRemember = false;
   bool get isRemember => _isRemember;
   bool _isObscureText = true;
@@ -54,7 +55,7 @@ class AuthenticationProvider with ChangeNotifier {
 
       setLoading(false);
 
-      if (_authenticationModel != null) {
+      if (_authenticationModel?.metadata?.code == 200) {
         return true;
       } else {
         return false;
@@ -62,13 +63,13 @@ class AuthenticationProvider with ChangeNotifier {
     } catch (e) {
       setLoading(false);
       log("Error Sign In Provider: $e");
-      _authenticationModel = AuthenticationModel(
-        code: 500,
-        status: "Error",
-        message: "$e",
-        data: null,
-      );
-      throw Exception();
+      // _authenticationModel = AuthenticationModel(
+      //   code: 500,
+      //   status: "Error",
+      //   message: "$e",
+      //   data: null,
+      // );
+      throw AppException("Gagal masuk. Coba lagi nanti.");
     }
   }
 
@@ -92,7 +93,7 @@ class AuthenticationProvider with ChangeNotifier {
 
       setLoading(false);
 
-      if (_authenticationModel != null) {
+      if (_authenticationModel?.metadata?.code == 200) {
         return true;
       } else {
         return false;
@@ -100,13 +101,13 @@ class AuthenticationProvider with ChangeNotifier {
     } catch (e) {
       setLoading(false);
       log("Error Sign Up Provider: $e");
-      _authenticationModel = AuthenticationModel(
-        code: 500,
-        status: "Error",
-        message: "$e",
-        data: null,
-      );
-      throw Exception();
+      // _authenticationModel = AuthenticationModel(
+      //   code: 500,
+      //   status: "Error",
+      //   message: "$e",
+      //   data: null,
+      // );
+      throw AppException("Gagal daftar. Coba lagi nanti.");
     }
   }
 
@@ -122,13 +123,13 @@ class AuthenticationProvider with ChangeNotifier {
     } catch (e) {
       setLoading(false);
       log("Error Request OTP Provider: $e");
-      _authenticationModel = AuthenticationModel(
-        code: 500,
-        status: "Error",
-        message: "$e",
-        data: null,
-      );
-      throw Exception();
+      // _authenticationModel = AuthenticationModel(
+      //   code: 500,
+      //   status: "Error",
+      //   message: "$e",
+      //   data: null,
+      // );
+      throw AppException("Gagal mengirim otp. Coba lagi nanti.");
     }
   }
 
@@ -154,13 +155,13 @@ class AuthenticationProvider with ChangeNotifier {
     } catch (e) {
       setLoading(false);
       log("Error Change Password Provider: $e");
-      _authenticationModel = AuthenticationModel(
-        code: 500,
-        status: "Error",
-        message: "$e",
-        data: null,
-      );
-      throw Exception();
+      // _authenticationModel = AuthenticationModel(
+      //   code: 500,
+      //   status: "Error",
+      //   message: "$e",
+      //   data: null,
+      // );
+      throw AppException("Gagal mengubah kata sandi. Coba lagi nanti.");
     }
   }
 }

@@ -1,12 +1,14 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:frontend/common/exception/app_exception.dart';
+import 'package:frontend/models/generic_response_model.dart';
 import 'package:frontend/models/user_model.dart';
 import 'package:frontend/services/user_service.dart';
 
 class UserProvider with ChangeNotifier {
   final _userService = UserService();
-  UserModel? _userModel;
-  UserModel? get userModel => _userModel;
+  GenericResponseModel<UserModel>? _userModel;
+  GenericResponseModel<UserModel>? get userModel => _userModel;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -23,6 +25,8 @@ class UserProvider with ChangeNotifier {
 
       _userModel = data;
 
+      log(_userModel!.data!.name.toString());
+
       setLoading(false);
 
       if (_userModel != null) {
@@ -33,20 +37,20 @@ class UserProvider with ChangeNotifier {
     } catch (e) {
       setLoading(false);
       log("Error Get Profile User Provider: $e");
-      _userModel = UserModel(
-        code: 500,
-        status: "Error",
-        message: "$e",
-        id: null,
-        nim: null,
-        name: null,
-        email: null,
-        major: null,
-        programStudy: null,
-        createdAt: null,
-        updatedAt: null,
-      );
-      throw Exception();
+      // _userModel = UserModel(
+      //   code: 500,
+      //   status: "Error",
+      //   message: "$e",
+      //   id: null,
+      //   nim: null,
+      //   name: null,
+      //   email: null,
+      //   major: null,
+      //   programStudy: null,
+      //   createdAt: null,
+      //   updatedAt: null,
+      // );
+      throw AppException("Gagal memuat data. Coba lagi nanti.");
     }
   }
 }

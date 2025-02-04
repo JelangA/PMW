@@ -1,12 +1,13 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:frontend/models/generic_response_model.dart';
 import 'package:frontend/models/workshop_model.dart';
 import 'package:frontend/services/workshop_service.dart';
 
 class WorkshopProvider with ChangeNotifier {
   final _workshopService = WorkshopService();
-  List<WorkshopModel> _workshopModel = [];
-  List<WorkshopModel> get workshopModel => _workshopModel;
+  GenericResponseModel<List<WorkshopModel>>? _workshopModel;
+  GenericResponseModel<List<WorkshopModel>>? get workshopModel => _workshopModel;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   int? _workshopId;
@@ -32,7 +33,7 @@ class WorkshopProvider with ChangeNotifier {
 
       setLoading(false);
 
-      if (_workshopModel.isNotEmpty) {
+      if (_workshopModel?.metadata?.code == 200) {
         return true;
       } else {
         return false;

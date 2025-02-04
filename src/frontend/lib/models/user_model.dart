@@ -1,11 +1,11 @@
 class UserModel {
-  int? code, id;
-  String? status, message, nim, name, email, major, programStudy, createdAt, updatedAt;
+  int? id;
+  String? nim, name, email, major, programStudy, createdAt, updatedAt;
 
   UserModel({
-    required this.code,
-    required this.status,
-    required this.message,
+    // required this.code,
+    // required this.status,
+    // required this.message,
     required this.id,
     required this.nim,
     required this.name,
@@ -17,22 +17,17 @@ class UserModel {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> object) {
-    var metadata = object['metadata'];
-    var data = object['data'];
-    var student = object['data']['student'];
+    var student = object['student'];
 
     return UserModel(
-      code: metadata['code'],
-      status: metadata['status'],
-      message: metadata['message'],
-      id: data['id'],
-      nim: data['nim'],
-      name: data['name'],
-      email: data['email'],
-      major: student['major'],
+      id: object['id'],
+      nim: object['nim'],
+      name: object['name'],
+      email: object['email'],
+      major: object['major'],
       programStudy: student['study_program'],
-      createdAt: data['created_at'],
-      updatedAt: data['updated_at'],
+      createdAt: object['created_at'],
+      updatedAt: object['updated_at'],
     );
   }
 }

@@ -45,13 +45,13 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
           );
         } else {
           guardedSnackbar(
-            "${attendanceProvider.attendanceModel?.message}",
+            "${attendanceProvider.attendanceModel?.metadata?.message}",
             Colors.red,
           );
         }
       } catch (e) {
         guardedSnackbar(
-          "Terjadi kesalahan: ${attendanceProvider.attendanceModel?.message}",
+          "Terjadi kesalahan: $e",
           Colors.red,
         );
       }
@@ -77,13 +77,13 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
           );
         } else {
           guardedSnackbar(
-            "${attendanceProvider.attendanceModel?.message}.",
+            "${attendanceProvider.attendanceModel?.metadata?.message}.",
             Colors.red,
           );
         }
       } catch (e) {
         guardedSnackbar(
-          "Terjadi kesalahan: ${attendanceProvider.attendanceModel?.message}",
+          "Terjadi kesalahan: $e",
           Colors.red,
         );
       }
@@ -150,7 +150,7 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
                       builder: (context, userProvider, child) {
                         return CustomTextFormFieldWidget(
                           label: "NIM",
-                          hintText: userProvider.userModel?.nim ?? "",
+                          hintText: userProvider.userModel?.data?.nim ?? "",
                           controller: nimController,
                           isEnabled: false,
                         );
@@ -163,7 +163,7 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
                       builder: (context, userProvider, child) {
                         return CustomTextFormFieldWidget(
                           label: "Nama lengkap",
-                          hintText: userProvider.userModel?.name ?? "",
+                          hintText: userProvider.userModel?.data?.name ?? "",
                           controller: nameController,
                           isEnabled: false,
                         );
@@ -177,7 +177,7 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
                         return CustomTextFormFieldWidget(
                           label: "Jurusan - Prodi",
                           hintText:
-                              "${userProvider.userModel?.major ?? ""} - ${userProvider.userModel?.programStudy ?? ""}",
+                              "${userProvider.userModel?.data?.major ?? ""} - ${userProvider.userModel?.data?.programStudy ?? ""}",
                           controller: departmentProgramStudyController,
                           isEnabled: false,
                         );
@@ -190,7 +190,7 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
                       builder: (context, userProvider, child) {
                         return CustomTextFormFieldWidget(
                           label: "Alamat email",
-                          hintText: userProvider.userModel?.email ?? "",
+                          hintText: userProvider.userModel?.data?.email ?? "",
                           controller: emailController,
                           isEnabled: false,
                         );
@@ -210,10 +210,11 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
                       ) {
                         return CustomDropdownButtonFormFieldWidget(
                           hintText: "Pilih Workshop",
-                          items: workshopProvider.workshopModel,
+                          items: workshopProvider.workshopModel?.data ?? [],
                           onChanged: (value) async {
-                            final workshop =
-                                workshopProvider.workshopModel.firstWhere(
+                            final workshop = workshopProvider
+                                .workshopModel!.data!
+                                .firstWhere(
                               (element) => element.title == value,
                             );
 
@@ -221,7 +222,7 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
                             await attendanceProvider
                                 .setWorkshopId(workshop.id.toString());
                             await attendanceProvider.checkAttendanceStatus(
-                                userProvider.userModel!.nim.toString());
+                                userProvider.userModel!.data!.nim.toString());
                           },
                         );
                       },
@@ -234,25 +235,25 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
                           (context, attendanceProvider, userProvider, child) {
                         final attendance = attendanceProvider.attendanceModel;
 
-                        if (attendance?.checkInTime != null &&
-                            attendance?.checkOutTime != null) {
+                        if (attendance?.data?.checkInTime != null &&
+                            attendance?.data?.checkOutTime != null) {
                           return CustomButtonWidget(
                             text:
-                                "Kamu telah presensi awal pada ${attendance!.checkInTime}\ndan presensi akhir pada ${attendance.checkOutTime}",
+                                "Kamu telah presensi awal pada ${attendance!.data?.checkInTime}\ndan presensi akhir pada ${attendance.data?.checkOutTime}",
                             onPressed: () {},
                             color: greenColor,
                             height: 70,
                             width: double.maxFinite,
                             isLoading: attendanceProvider.isLoading,
                           );
-                        } else if (attendance?.checkInTime == null) {
+                        } else if (attendance?.data?.checkInTime == null) {
                           return CustomButtonWidget(
                             text: "Presensi Awal Sekarang!",
                             onPressed: () {
                               checkIn(
                                 attendanceProvider,
                                 attendanceProvider.workshopId!,
-                                userProvider.userModel!.nim!,
+                                userProvider.userModel!.data!.nim!,
                               );
                             },
                             color: primaryColor,
@@ -267,7 +268,7 @@ class _AttendDesktopPageState extends State<AttendDesktopPage> {
                               checkOut(
                                 attendanceProvider,
                                 attendanceProvider.workshopId!,
-                                userProvider.userModel!.nim!,
+                                userProvider.userModel!.data!.nim!,
                               );
                             },
                             color: primaryColor,

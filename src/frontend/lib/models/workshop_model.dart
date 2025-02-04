@@ -1,8 +1,6 @@
 class WorkshopModel {
-  int? code, id;
-  String? status,
-      message,
-      title,
+  int? id;
+  String? title,
       description,
       startTime,
       endTime,
@@ -11,9 +9,6 @@ class WorkshopModel {
       updatedAt;
 
   WorkshopModel({
-    required this.code,
-    required this.status,
-    required this.message,
     required this.id,
     required this.title,
     required this.description,
@@ -24,12 +19,8 @@ class WorkshopModel {
     required this.updatedAt,
   });
 
-  factory WorkshopModel.fromJson(
-      Map<String, dynamic> metadata, Map<String, dynamic> data) {
+  factory WorkshopModel.fromJson(Map<String, dynamic> data) {
     return WorkshopModel(
-      code: metadata['code'],
-      status: metadata['status'],
-      message: metadata['message'],
       id: data['workshop_id'],
       title: data['title'],
       description: data['description'],

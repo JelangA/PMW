@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/common/constant.dart';
 import 'package:frontend/models/attendance_model.dart';
+import 'package:frontend/models/generic_response_model.dart';
 import 'package:http/http.dart';
 
 class AttendanceService {
   final storage = FlutterSecureStorage(webOptions: getWebOptions());
 
-  Future<AttendanceModel> checkAttendanceStatus(
+  Future<GenericResponseModel<AttendanceModel>?> checkAttendanceStatus(
     String workshopId,
     String nim,
   ) async {
@@ -33,14 +33,17 @@ class AttendanceService {
 
       // log(jsonObject.toString());
 
-      return AttendanceModel.fromJson(jsonObject);
+      return GenericResponseModel.fromJson(
+        jsonObject,
+        (data) => AttendanceModel.fromJson(jsonObject),
+      );
     } catch (e) {
       log("Error Check Attendance Status Service: $e");
       throw Exception("$e");
     }
   }
 
-  Future<AttendanceModel> checkIn(
+  Future<GenericResponseModel<AttendanceModel>?> checkIn(
     String workshopId,
     String nim,
   ) async {
@@ -61,14 +64,17 @@ class AttendanceService {
 
       var jsonObject = jsonDecode(response.body);
 
-      return AttendanceModel.fromJson(jsonObject);
+      return GenericResponseModel.fromJson(
+        jsonObject,
+        (data) => AttendanceModel.fromJson(jsonObject),
+      );
     } catch (e) {
       log("Error Check In Service: $e");
       throw Exception("$e");
     }
   }
 
-  Future<AttendanceModel> checkOut(
+  Future<GenericResponseModel<AttendanceModel>?> checkOut(
     String workshopId,
     String nim,
   ) async {
@@ -89,7 +95,10 @@ class AttendanceService {
 
       var jsonObject = jsonDecode(response.body);
 
-      return AttendanceModel.fromJson(jsonObject);
+      return GenericResponseModel.fromJson(
+        jsonObject,
+        (data) => AttendanceModel.fromJson(jsonObject),
+      );
     } catch (e) {
       log("Error Check Out Service: $e");
       throw Exception("$e");

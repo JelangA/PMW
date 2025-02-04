@@ -8,8 +8,9 @@ double defaultPadding = 20;
 double defaultBorderRadius = 15;
 
 String baseURL() {
-  // return "http://157.66.55.114:8001";
+  // return "http://pmw-polban.byraq-tech.com:8001";
   return "http://127.0.0.1:8001";
+  // return "http://157.66.55.114:8001";
 }
 
 String baseAPIURL() {
@@ -26,11 +27,13 @@ Map<String, String> header(
 }) {
   if (isNeedToken == true) {
     return {
+      'Access-Control-Allow-Origin': '*',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
   } else {
     return {
+      'Access-Control-Allow-Origin': '*',
       'Accept': 'application/json',
     };
   }

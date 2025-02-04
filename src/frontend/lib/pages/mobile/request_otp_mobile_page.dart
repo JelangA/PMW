@@ -50,13 +50,13 @@ class _RequestOtpMobilePageState extends State<RequestOtpMobilePage> {
           navigate(email);
         } else {
           guardedSnackbar(
-            "${authenticationProvider.authenticationModel?.message}.",
+            "${authenticationProvider.authenticationModel?.metadata?.message}.",
             Colors.red,
           );
         }
       } catch (e) {
         guardedSnackbar(
-          "Terjadi kesalahan. ${authenticationProvider.authenticationModel?.message}.",
+          "Terjadi kesalahan. ${authenticationProvider.authenticationModel?.metadata?.message}.",
           Colors.red,
         );
       }

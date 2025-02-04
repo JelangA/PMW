@@ -3,13 +3,13 @@ import 'dart:developer';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/common/constant.dart';
 import 'package:frontend/models/authentication_model.dart';
+import 'package:frontend/models/generic_response_model.dart';
 import 'package:http/http.dart';
-
 
 class AuthenticationService {
   final storage = FlutterSecureStorage(webOptions: getWebOptions());
 
-  Future<AuthenticationModel> signIn(
+  Future<GenericResponseModel<AuthenticationModel>?> signIn(
     String email,
     String password, {
     bool isRemember = false,
@@ -36,18 +36,19 @@ class AuthenticationService {
           await storage.write(key: "isRemember", value: "0");
           await storage.write(key: "token", value: jsonObject['data']);
         }
-
-        return AuthenticationModel.fromJson(jsonObject);
-      } else {
-        return AuthenticationModel.fromJson(jsonObject);
       }
+
+      return GenericResponseModel.fromJson(
+        jsonObject,
+        (data) => AuthenticationModel.fromJson(data),
+      );
     } catch (e) {
       log("Error Sign In Service: $e");
       throw Exception("$e");
     }
   }
 
-  Future<AuthenticationModel> signUp(
+  Future<GenericResponseModel<AuthenticationModel>?> signUp(
     String nim,
     String name,
     String email,
@@ -69,11 +70,10 @@ class AuthenticationService {
 
       var jsonObject = jsonDecode(response.body);
 
-      if (response.statusCode == 200) {
-        return AuthenticationModel.fromJson(jsonObject);
-      } else {
-        return AuthenticationModel.fromJson(jsonObject);
-      }
+      return GenericResponseModel.fromJson(
+        jsonObject,
+        (data) => AuthenticationModel.fromJson(data),
+      );
     } catch (e) {
       log("Error Sign Up Service: $e");
       throw Exception("$e");
