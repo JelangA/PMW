@@ -121,107 +121,110 @@ class _SignInMobilePageState extends State<SignInMobilePage> {
                     color: white,
                     borderRadius: BorderRadius.circular(defaultBorderRadius),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Masuk di sini",
-                        style: primaryTextStyle.copyWith(
-                          fontWeight: bold,
-                          fontSize: 20,
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Masuk di sini",
+                          style: primaryTextStyle.copyWith(
+                            fontWeight: bold,
+                            fontSize: 20,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: defaultPadding,
-                      ),
-                      CustomTextFormFieldWidget(
-                        label: "Alamat email",
-                        hintText: "user@example.com",
-                        controller: emailController,
-                      ),
-                      SizedBox(
-                        height: defaultPadding,
-                      ),
-                      Consumer<AuthenticationProvider>(
-                        builder: (context, authProvider, child) {
-                          return CustomTextFormFieldWidget(
-                            label: "Kata sandi",
-                            hintText: "********",
-                            isPasswordField: true,
-                            isObscureText: authProvider.isObscureText,
-                            controller: passwordController,
-                            setObscureText: () {
-                              authProvider.setIsObscureText(
-                                  !authProvider.isObscureText);
-                            },
-                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: defaultPadding,
-                      ),
-                      const RememberMeCheckBoxWidget(),
-                      SizedBox(
-                        height: height(context) * 0.1,
-                      ),
-                      Consumer<AuthenticationProvider>(
-                        builder: (context, authenticationProvider, child) {
-                          return AuthButtonWidget(
-                            text: "Masuk sekarang!",
-                            isLoading: authenticationProvider.isLoading,
-                            onPressed: () {
-                              signIn(
-                                authenticationProvider,
-                                emailController.text,
-                                passwordController.text,
-                              );
-                            },
-                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: defaultPadding,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                PageTransition(
-                                  type: PageTransitionType.rightToLeft,
-                                  child: const RequestOtpPage(),
+                        SizedBox(
+                          height: defaultPadding,
+                        ),
+                        CustomTextFormFieldWidget(
+                          label: "Alamat email",
+                          hintText: "user@example.com",
+                          controller: emailController,
+                        ),
+                        SizedBox(
+                          height: defaultPadding,
+                        ),
+                        Consumer<AuthenticationProvider>(
+                          builder: (context, authProvider, child) {
+                            return CustomTextFormFieldWidget(
+                              label: "Kata sandi",
+                              hintText: "********",
+                              isPasswordField: true,
+                              isObscureText: authProvider.isObscureText,
+                              controller: passwordController,
+                              setObscureText: () {
+                                authProvider.setIsObscureText(
+                                    !authProvider.isObscureText);
+                              },
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: defaultPadding,
+                        ),
+                        const RememberMeCheckBoxWidget(),
+                        SizedBox(
+                          height: height(context) * 0.1,
+                        ),
+                        Consumer<AuthenticationProvider>(
+                          builder: (context, authenticationProvider, child) {
+                            return AuthButtonWidget(
+                              text: "Masuk sekarang!",
+                              isLoading: authenticationProvider.isLoading,
+                              onPressed: () {
+                                signIn(
+                                  authenticationProvider,
+                                  emailController.text,
+                                  passwordController.text,
+                                );
+                              },
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: defaultPadding,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  PageTransition(
+                                    type: PageTransitionType.rightToLeft,
+                                    child: const RequestOtpPage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "Lupa kata sandi?",
+                                style: primaryTextStyle.copyWith(
+                                  fontWeight: bold,
                                 ),
-                              );
-                            },
-                            child: Text(
-                              "Lupa kata sandi?",
-                              style: primaryTextStyle.copyWith(
-                                fontWeight: bold,
                               ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushAndRemoveUntil(
-                                PageTransition(
-                                  type: PageTransitionType.rightToLeft,
-                                  child: const SignUpPage(),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  PageTransition(
+                                    type: PageTransitionType.rightToLeft,
+                                    child: const SignUpPage(),
+                                  ),
+                                  (Route<dynamic> route) => false,
+                                );
+                              },
+                              child: Text(
+                                "Belum punya akun?",
+                                style: primaryTextStyle.copyWith(
+                                  fontWeight: bold,
+                                  color: primaryColor,
                                 ),
-                                (Route<dynamic> route) => false,
-                              );
-                            },
-                            child: Text(
-                              "Belum punya akun?",
-                              style: primaryTextStyle.copyWith(
-                                fontWeight: bold,
-                                color: primaryColor,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
