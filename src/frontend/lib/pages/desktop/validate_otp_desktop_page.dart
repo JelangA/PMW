@@ -102,7 +102,7 @@ class _ValidateOtpDesktopPageState extends State<ValidateOtpDesktopPage> {
           Expanded(
             flex: 5,
             child: Image.asset(
-              "assets/png/pmw-poster.png",
+              "assets/png/pmw_poster.png",
               fit: BoxFit.cover,
             ),
           ),

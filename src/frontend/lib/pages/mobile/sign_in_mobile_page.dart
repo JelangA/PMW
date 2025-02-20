@@ -106,7 +106,7 @@ class _SignInMobilePageState extends State<SignInMobilePage> {
             height: height(context),
             width: width(context),
             child: Image.asset(
-              "assets/png/pmw-poster.png",
+              "assets/png/pmw_poster.png",
               fit: BoxFit.cover,
             ),
           ),

@@ -103,7 +103,7 @@ class _ValidateOtpMobilePageState extends State<ValidateOtpMobilePage> {
             height: height(context),
             width: width(context),
             child: Image.asset(
-              "assets/png/pmw-poster.png",
+              "assets/png/pmw_poster.png",
               fit: BoxFit.cover,
             ),
           ),

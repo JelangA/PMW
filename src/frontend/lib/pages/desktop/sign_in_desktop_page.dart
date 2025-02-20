@@ -105,7 +105,7 @@ class _SignInDesktopPageState extends State<SignInDesktopPage> {
           Expanded(
             flex: 5,
             child: Image.asset(
-              "assets/png/pmw-poster.png",
+              "assets/png/pmw_poster.png",
               fit: BoxFit.cover,
             ),
           ),
