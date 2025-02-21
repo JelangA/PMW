@@ -54,7 +54,7 @@ class AuthController
 		try{
 			$request->validate([
 				'nim' => 'required|numeric|unique:users,nim',
-				'email' => 'required|email',
+				'email' => 'required|email|unique:users,email',
 				'password' => 'required',
 			]);
 			
