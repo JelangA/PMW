@@ -160,7 +160,7 @@ class _SignUpDesktopPageState extends State<SignUpDesktopPage> {
                   ),
                   CustomTextFormFieldWidget(
                     label: "Alamat email",
-                    hintText: "user@example.com",
+                    hintText: "user@polban.ac.id",
                     controller: emailController,
                   ),
                   SizedBox(

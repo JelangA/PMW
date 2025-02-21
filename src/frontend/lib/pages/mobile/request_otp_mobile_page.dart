@@ -108,7 +108,7 @@ class _RequestOtpMobilePageState extends State<RequestOtpMobilePage> {
                       ),
                       CustomTextFormFieldWidget(
                         label: "Alamat email",
-                        hintText: "user@example.com",
+                        hintText: "user@polban.ac.id",
                         controller: emailController,
                       ),
                       SizedBox(

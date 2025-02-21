@@ -151,7 +151,7 @@ class _SignUpMobilePageState extends State<SignUpMobilePage> {
                       ),
                       CustomTextFormFieldWidget(
                         label: "Alamat email",
-                        hintText: "user@example.com",
+                        hintText: "user@epolban.ac.id",
                         controller: emailController,
                       ),
                       SizedBox(
