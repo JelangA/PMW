@@ -1,10 +1,10 @@
-run-app-with-setup:
+setup:
 	cp ./src/backend/.env.example ./src/backend/.env
 	docker compose build
 	docker compose up -d
 	docker exec php /bin/sh -c "composer install && npm install && chmod -R 777 storage && php artisan key:generate"
 
-run-app-with-setup-db:
+setup-db:
 	cp ./src/backend/.env.example ./src/backend/.env
 	docker compose build
 	docker compose up -d
@@ -14,7 +14,7 @@ run-app:
 	docker compose up -d
 
 kill-app:
-	docker compose down
+	docker compose down -v
 
 enter-nginx-container:
 	docker exec -it nginx /bin/sh
@@ -39,3 +39,9 @@ code-format:
 
 code-test:
 	docker exec php /bin/sh -c "php artisan test"
+
+restart:
+	docker compose down -v
+	docker compose up -d
+	
+	
