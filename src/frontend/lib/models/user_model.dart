@@ -21,7 +21,7 @@ class UserModel {
 
     return UserModel(
       id: object['id'],
-      nim: object['nim'],
+      nim: object['nim'].toString(),
       name: object['name'],
       email: object['email'],
       major: object['major'],
