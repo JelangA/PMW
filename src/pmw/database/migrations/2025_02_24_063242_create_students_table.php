@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('study_program', length: 150);
             $table->string('year');
             $table->string('email');
-            $table->enum('status', ['AKTIF', 'NON-AKTIF']);
+            $table->string('status');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
