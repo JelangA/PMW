@@ -13,17 +13,19 @@ return new class extends Migration
     {
         Schema::create('lectures', function (Blueprint $table) {
             $table->string('nip')->primary();
+            $table->string('nidn');
             $table->string('name');
-            $table->string('major', length: 100);
-            $table->string('study_program', length: 150);
-            $table->enum('status', ['AKTIF', 'NON-AKTIF']);
+            $table->string('degree');
+            $table->string('academic_position');
+            $table->string('education');
+            $table->string('homebase');
+            $table->date('join_date');
             $table->foreignId("user_id")
-                ->references("id")
-                ->on("users")
+                ->nullable()
+                ->constrained("users")
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->timestamps();
         });
     }
 
@@ -35,3 +37,4 @@ return new class extends Migration
         Schema::dropIfExists('lectures');
     }
 };
+
