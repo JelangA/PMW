@@ -14,7 +14,7 @@ setup-db:
 	docker compose up -d
 	docker exec workshop /bin/sh -c "composer install && npm install && chmod -R guo+w storage && php artisan key:generate && php artisan migrate:fresh"
 	docker exec pmw /bin/sh -c "composer install && npm install && chmod -R guo+w storage && php artisan key:generate && php artisan migrate:fresh"
-	docker exec -i mysql_workshop mysql -u wirausaha -pKewirausahaan2025 pmw < src/workshop/database/seeders/output.sql
+	docker exec -i mysql_workshop mysql -u wirausaha -pKewirausahaan2025 pmw < src/workshop/database/seeders/students.sql
 	docker exec -i mysql_pmw mysql -u wirausaha -pKewirausahaan2025 pmw < src/pmw/database/seeders/output.sql
 	docker exec -i mysql_pmw mysql -u wirausaha -pKewirausahaan2025 pmw < src/pmw/database/seeders/students.sql
   
