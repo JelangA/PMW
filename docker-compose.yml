@@ -33,7 +33,7 @@ services:
         expose:
             - "3306"  # Tidak diekspos ke luar, hanya bisa diakses dalam jaringan Docker
         volumes:
-            - ./mysql_workshop:/var/lib/mysql
+            - mysql_workshop_data:/var/lib/mysql
         environment:
             MYSQL_DATABASE: pmw
             MYSQL_USER: wirausaha
@@ -53,7 +53,7 @@ services:
         expose:
             - "3306"  # Tidak diekspos ke luar
         volumes:
-            - ./mysql_pmw:/var/lib/mysql
+            - mysql_pmw_data:/var/lib/mysql
         environment:
             MYSQL_DATABASE: pmw
             MYSQL_USER: wirausaha
@@ -102,3 +102,7 @@ services:
         networks:
             - laravel
 
+
+volumes:
+    mysql_workshop_data:
+    mysql_pmw_data:

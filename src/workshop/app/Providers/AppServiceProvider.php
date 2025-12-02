@@ -19,6 +19,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if (app()->runningInConsole()) {
+            return;
+        }
+        
+        // Force Livewire to use workshop-api prefix
+        \Livewire\Livewire::setUpdateRoute(function ($handle) {
+            return \Illuminate\Support\Facades\Route::post('/workshop-api/livewire/update', $handle)
+                ->name('livewire.update');
+        });
+        
+        \Livewire\Livewire::setScriptRoute(function ($handle) {
+            return \Illuminate\Support\Facades\Route::get('/workshop-api/livewire/livewire.js', $handle)
+                ->name('livewire.assets');
+        });
     }
 }

@@ -12,6 +12,7 @@ use Laravel\Sanctum\Http\Middleware\CheckAbilities;
         api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
+        apiPrefix: 'api',
     )
     ->withMiddleware(function (Middleware $middleware) {
         // $middleware->use([
@@ -23,6 +24,8 @@ use Laravel\Sanctum\Http\Middleware\CheckAbilities;
 			'ability' => CheckAbilities::class,
 			'auth:sanctum' => EnsureFrontendRequestsAreStateful::class,
 		]);
+		
+		$middleware->prepend(\App\Http\Middleware\SetWorkshopApiBasePath::class);
 		
     })
     ->withExceptions(function (Exceptions $exceptions) {
